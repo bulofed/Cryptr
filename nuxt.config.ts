@@ -7,6 +7,12 @@ export default defineNuxtConfig({
     'nuxt-lodash',
     '@formkit/nuxt',
     '@nuxtjs/tailwindcss',
-    'nuxt-mongoose'
+    'nuxt-mongoose',
+    '@pinia/nuxt',
+    '@vueuse/nuxt',
+    '@nuxtjs/color-mode',
+    '@nuxt/icon',
+    '@nuxt/image',
+    '@nuxt/ui'
   ]
 })
