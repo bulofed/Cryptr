@@ -11,5 +11,9 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxt/icon',
     '@nuxt/image'
-  ]
+  ],
+  runtimeConfig:{
+    mongodbUri: process.env.MONGODB_URI,
+    mongodbName: process.env.MONGODB_NAME
+  }
 })
