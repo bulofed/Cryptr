@@ -1,4 +1,9 @@
 <template>
-  <div>
-  </div>
+
+  <Header/>
+
+  <NuxtPage/>
+
+  <Footer/>
+  
 </template>
