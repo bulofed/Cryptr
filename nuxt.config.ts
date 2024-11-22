@@ -4,10 +4,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@nuxt/fonts',
-    'nuxt-lodash',
     '@formkit/nuxt',
     '@nuxtjs/tailwindcss',
-    'nuxt-mongoose',
     '@pinia/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/color-mode',
