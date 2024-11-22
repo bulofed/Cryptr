@@ -22,7 +22,6 @@
     "@vueuse/nuxt": "^11.2.0",
     "mongoose": "^8.8.2",
     "nuxt": "^3.14.159",
-    "nuxt-server-utils": "^0.0.7",
     "vue": "latest",
     "vue-router": "latest"
   },
