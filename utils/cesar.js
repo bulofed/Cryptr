@@ -1,20 +1,20 @@
-//str input
-let phrase_decodee = "Hello World!!!";
-let shift = 5;
-let tableau_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-let phrase_codee = "";
-for (let i = 0; i < phrase_decodee.length; i++) {
-  let letter = phrase_decodee[i].toUpperCase();
-  let index = tableau_letters.indexOf(letter);
+// str input
+const phraseDecodee = 'Hello World!!!'
+const shift = 5
+const lettres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+let phraseCodee = ''
+for (let i = 0; i < phraseDecodee.length; i++) {
+  const letter = phraseDecodee[i].toUpperCase()
+  const index = lettres.indexOf(letter)
   if (index !== -1) {
     // si la lettre est dans le tableau
-    let new_index = (index + shift) % 26; //
-    phrase_codee = phrase_codee.substring(0, i) + tableau_letters[new_index];
+    const newIndex = (index + shift) % 26 //
+    phraseCodee = phraseCodee.substring(0, i) + lettres[newIndex]
   }
-  if (index == -1) {
-    phrase_codee = phrase_codee.substring(0, i) + letter;
+  if (index === -1) {
+    phraseCodee = phraseCodee.substring(0, i) + letter
   }
 }
-console.log(phrase_decodee);
-console.log(shift);
-console.log(phrase_codee);
+console.log(phraseDecodee)
+console.log(shift)
+console.log(phraseCodee)

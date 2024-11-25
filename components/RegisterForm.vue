@@ -1,30 +1,40 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-    <form>
-        <div>
-            <label for="username">Nom d'utilisateur:</label>
-            <input type="text" id="username"  required />
-        </div>
-        
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" required />
-        </div>
-        
-        <div>
-            <label for="motDePasse">Mot de passe:</label>
-            <input type="password" id="motDePasse" required />
-        </div>
-        
-        <button type="submit">S'inscrire</button>
+  <form>
+    <div>
+      <label for="username">Nom d'utilisateur:</label>
+      <input
+        id="username"
+        type="text"
+        required
+      >
+    </div>
 
-        <p>Déjà un compte? <a href="/connexion"> Se connecter </a></p>
-    </form>
+    <div>
+      <label for="email">Email:</label>
+      <input
+        id="email"
+        type="email"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="motDePasse">Mot de passe:</label>
+      <input
+        id="motDePasse"
+        type="password"
+        required
+      >
+    </div>
+
+    <button type="submit">
+      S'inscrire
+    </button>
+
+    <p>Déjà un compte? <a href="/connexion"> Se connecter </a></p>
+  </form>
 </template>
 
-<style>
-
-</style>
+<style></style>
