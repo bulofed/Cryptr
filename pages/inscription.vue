@@ -1,11 +1,7 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-    <Register />
+  <Register />
 </template>
 
-<style>
-
-</style>
+<style></style>
