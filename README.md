@@ -1,75 +1,24 @@
-# Nuxt Minimal Starter
+<p align="center"><img src="https://socialify.git.ci/bulofed/Cryptr/image?description=1&amp;descriptionEditable=Escape%20game%20en%20ligne%20captivant%20et%20immersif%20!%20%F0%9F%95%B5%EF%B8%8F%E2%80%8D%E2%99%82%EF%B8%8F%F0%9F%94%8D&amp;name=1&amp;owner=1&amp;pattern=Plus&amp;theme=Auto" alt="project-image"></p>
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+<p align="center"><img src="https://img.shields.io/badge/Nuxt-002E3B?style=for-the-badge&amp;logo=nuxtdotjs&amp;logoColor=#00DC82" alt="shields"><img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&amp;logo=mongodb&amp;logoColor=white" alt="shields"></p>
 
-## Setup
+<h2>🚀 Demo</h2>
 
-Make sure to install dependencies:
+[https://cryptr.vercel.app/](https://cryptr.vercel.app/)
 
-```bash
-# npm
-npm install
 
-# pnpm
-pnpm install
+<h2>🛠️ Installation</h2>
 
-# yarn
-yarn install
+1. Installez les dépendances
 
-# bun
-bun install
+```
+npm i
 ```
 
-## Development Server
+2. Configurez le `.env`
 
-Start the development server on `http://localhost:3000`:
+3. Lancez le projet
 
-```bash
-# npm
+```
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
