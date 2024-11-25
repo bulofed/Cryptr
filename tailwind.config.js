@@ -1,5 +1,3 @@
-const plugin = require('tailwindcss/plugin')
-
 module.exports = {
     content: [],
     theme: {
@@ -7,9 +5,5 @@ module.exports = {
         sans: ['Barlow', 'sans-serif'],
       }
     },
-    plugins: [
-      plugin(function({ addVariant}){
-        addVariant('not-last', '&:not(:last-child)')
-      })
-    ],
+    plugins: [],
   }
