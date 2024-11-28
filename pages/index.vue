@@ -5,11 +5,11 @@
             Déchiffrez l'impossible,<br>Rejoignez l'élite 🚀
         </h1>
 
-        <div class="absolute bottom-20 w-full flex justify-center z-10">
+        <div class="absolute bottom-32 w-full flex justify-center z-10">
             <router-link
                 to="/connexion"
-                class="py-2 px-6 w-60 h-14.5 rounded-full text-sm text-white bg-cyan-600 hover:bg-red-700 text-xl text-center flex items-center justify-center">
-                Se connecter
+                class="py-2 px-6 w-80 h-16 rounded-full text-sm text-white bg-cyan-600 hover:bg-red-700 text-xl text-center flex items-center justify-center">
+                Commencer le challenge
             </router-link>
         </div>
     </div>
