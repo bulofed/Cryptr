@@ -1,4 +1,28 @@
 <script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { handleLogin } from "../server/handlers/loginHandler";
+
+const router = useRouter();
+
+const rememberMe = ref(false);
+
+const emailOrUsername = ref('');
+const password = ref('');
+
+const onSubmit = async () => {
+
+  const response = await handleLogin(emailOrUsername.value, password.value);
+
+  if (response.status === 200) {
+    // Rediriger l'utilisateur vers la page d'accueil ou une autre page
+    router.push('/');
+  } else {
+    // Afficher un message d'erreur
+    alert(response.message);
+  }
+
+};
 </script>
 
 <template>
@@ -42,7 +66,7 @@
         </div>
 
         <!-- Formulaire de connexion -->
-        <form class="space-y-7">
+        <form class="space-y-7" @submit.prevent="onSubmit">
           <!-- Champ Email ou Nom d'utilisateur -->
           <div>
             <label for="mail_or_username" class="block text-sm font-medium text-gray-700 py-1">
@@ -51,7 +75,7 @@
                 <a href="" class="text-red-500 text-bold">*</a>
               </p>
             </label>
-            <input type="text" id="mail_or_username" required placeholder="Entrez votre mail ou nom d'utilisateur"
+            <input type="text" id="mail_or_username" v-model = "emailOrUsername" required placeholder="Entrez votre mail ou nom d'utilisateur"
               class="block w-full px-3 py-3 border border-gray-300 rounded-full shadow-sm text-xs"
             />
           </div>
@@ -64,7 +88,7 @@
                 <a href="" class="text-red-500 text-bold">*</a>
               </p>
             </label>
-            <input type="password" id="motDePasse" required placeholder="Entrez votre mot de passe"
+            <input type="password" id="motDePasse" v-model="password" required placeholder="Entrez votre mot de passe"
              class="w-full px-3 py-3 border border-gray-300 rounded-full shadow-sm text-xs"
             />
           </div>
@@ -104,4 +128,3 @@
     </div>
   </div>
 </template>
-x
