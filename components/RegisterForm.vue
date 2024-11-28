@@ -16,7 +16,7 @@
           <button
             class="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-full shadow-sm bg-white hover:bg-gray-200"
           >
-            <img src="~/public/github.svg" alt="GitHub" class="w-5 h-5" />
+           <IconGithub />
             <span class="text-gray-700">
               <b>Continuer avec GitHub</b>
             </span>
@@ -109,7 +109,7 @@
 
       <!-- Image -->
       <div  >
-        <img src="~/public/Logo_Lock.svg" alt="Authentification" class="max-h-* w-80 rounded-lg" />
+        <img src="~/public/Logo_Lock.jpg" alt="Authentification" class="max-h-* w-80 rounded-lg" />
       </div>
     </div>
   </div>
