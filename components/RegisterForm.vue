@@ -57,41 +57,41 @@ const onSubmit = () => {
         </div>
 
         <!-- Formulaire de connexion -->
-        <form class="space-y-4">
+        <form class="space-y-4" @submit.prevent="onSubmit">
           <!-- Champ Email ou Nom d'utilisateur -->
           <div>
-            <label for="mail_or_username" class="block text-sm font-medium text-gray-700 py-1">
+            <label for="username" class="block text-sm font-medium text-gray-700 py-1" >
               <p class="font-bold">
                 nom d'utilisateur
                 <a href="" class="text-red-500 text-bold">*</a>
               </p>
             </label>
-            <input type="text" id="mail_or_username" required placeholder="Entrez votre mail ou nom d'utilisateur"
+            <input type="text" id="username"  v-model="formData.username" required placeholder="Entrez nom d'utilisateur"
               class="block w-full px-3 py-3 border border-gray-300 rounded-full shadow-sm text-xs"
             />
           </div>
 
           <div>
-            <label for="mail_or_username" class="block text-sm font-medium text-gray-700 py-1">
+            <label for="Email" class="block text-sm font-medium text-gray-700 py-1">
               <p class="font-bold">
                 Email 
                 <a href="" class="text-red-500 text-bold">*</a>
               </p>
             </label>
-            <input type="text" id="mail_or_username" required placeholder="Entrez votre mail ou nom d'utilisateur"
+            <input type="text" id="email"  v-model="formData.email" required placeholder="Entrez votre mail"
               class="block w-full px-3 py-3 border border-gray-300 rounded-full shadow-sm text-xs"
             />
           </div>
 
           <!-- Champ Mot de passe -->
           <div>
-            <label for="motDePasse" class="block text-sm font-medium text-gray-700 py-1">
+            <label for="password" class="block text-sm font-medium text-gray-700 py-1">
               <p class="font-bold">
                 Mot de passe
                 <a href="" class="text-red-500 text-bold">*</a>
               </p>
             </label>
-            <input type="password" id="motDePasse" required placeholder="Entrez votre mot de passe"
+            <input type="password" id="motDePasse"  v-model="formData.password" required placeholder="Entrez votre mot de passe"
              class="w-full px-3 py-3 border border-gray-300 rounded-full shadow-sm text-xs"
             />
           </div>
@@ -110,7 +110,7 @@ const onSubmit = () => {
           <!-- Bouton de connexion -->
           <button
             type="submit"
-            class="w-full flex justify-center py-2 px-4 rounded-full text-sm text-white bg-neutral-900 hover:bg-red-700" > Se connecter
+            class="w-full flex justify-center py-2 px-4 rounded-full text-sm text-white bg-neutral-900 hover:bg-red-700" > S'inscrire
           </button>
 
           <!-- Lien vers l'inscription -->
