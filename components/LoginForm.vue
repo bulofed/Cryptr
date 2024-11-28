@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import Cookies from 'js-cookie';
 import { handleLogin } from "../server/handlers/loginHandler";
 
 const router = useRouter();
@@ -15,6 +16,8 @@ const onSubmit = async () => {
   const response = await handleLogin(emailOrUsername.value, password.value);
 
   if (response.status === 200) {
+    Cookies.set('session', JSON.stringify(response.user), { expires: rememberMe.value ? 7 : null });
+
     // Rediriger l'utilisateur vers la page d'accueil ou une autre page
     router.push('/');
   } else {
