@@ -5,16 +5,16 @@
   <div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
     <div class="flex gap-8 items-center bg-white p-8 rounded-lg shadow-lg max-w-4xl">
       <!-- Formulaire -->
-      <div class="space-y-">
+      <div class="space-y-5">
         <!-- Titre -->
         <div class="text-center">
           <h2 class="text-3xl font-bold text-gray-900">Creez votre compte</h2>
         </div>
 
         <!-- Boutons pour les différentes connexions -->
-        <div class="space-y-3">
+        <div class="space-y-2">
           <button
-            class="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-full shadow-sm bg-white hover:bg-gray-200"
+            class="w-full flex items-center justify-center gap-3 px-4 py-1 border border-gray-300 rounded-full shadow-sm bg-white hover:bg-gray-200"
           >
            <IconGithub />
             <span class="text-gray-700">
@@ -42,7 +42,7 @@
         </div>
 
         <!-- Formulaire de connexion -->
-        <form class="space-y-7">
+        <form class="space-y-4">
           <!-- Champ Email ou Nom d'utilisateur -->
           <div>
             <label for="mail_or_username" class="block text-sm font-medium text-gray-700 py-1">
