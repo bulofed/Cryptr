@@ -17,7 +17,10 @@ const onSubmit = () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+  <NuxtLink to="/">
+    <IconLogo class="absolute top-8 left-8 size-12 fill-black cursor-pointer" />
+  </NuxtLink>
+    <div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
     <div class="flex gap-8 items-center bg-white p-8 rounded-lg shadow-lg max-w-4xl">
       <!-- Formulaire -->
       <div class="space-y-5">
