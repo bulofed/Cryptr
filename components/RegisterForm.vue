@@ -1,4 +1,19 @@
 <script setup>
+import { ref } from "vue";
+import { handleSubmit } from "../server/handlers/registerHandler";
+
+const formData = ref({
+    username: '',
+    email: '',
+    password: ''
+});
+
+const rememberMe = ref(false);
+
+
+const onSubmit = () => {
+    handleSubmit(formData.value.username, formData.value.email, formData.value.password);
+};
 </script>
 
 <template>
