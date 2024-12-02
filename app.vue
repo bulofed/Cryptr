@@ -5,7 +5,9 @@ const route = useRoute()
 const hideLayoutRoutes = ['/inscription', '/connexion']
 
 // Vérifie si on doit cacher le layout
-const shouldHideLayout = computed(() => hideLayoutRoutes.includes(route.path))
+const shouldHideLayout = computed(() => {
+  return hideLayoutRoutes.includes(route.path) || route.path.startsWith('/enigme')
+})
 </script>
 
 <template>
