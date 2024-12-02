@@ -3,7 +3,7 @@
         <IconLogo class="size-12 fill-white" />
         <nav class="flex space-x-8 text-base font-sans">
             <NuxtLink to="/dashboard"><b>Dashboard</b></NuxtLink>
-            <NuxtLink to="/challenges"><b>Challenges</b></NuxtLink>
+            <NuxtLink to="/challenge"><b>Challenge</b></NuxtLink>
             <NuxtLink to="/classement"><b>Classement</b></NuxtLink>
         </nav>
     </div>
