@@ -1,9 +1,73 @@
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const currentSlide = ref(0)
+const slides = ref(3) 
+const slideInterval = ref(null)
+
+const nextSlide = () => {
+  currentSlide.value = (currentSlide.value + 1) % slides.value
+  updateSlidePosition()
+}
+
+const prevSlide = () => {
+  currentSlide.value = (currentSlide.value - 1 + slides.value) % slides.value
+  updateSlidePosition()
+}
+
+const goToSlide = (index) => {
+  currentSlide.value = index
+  updateSlidePosition()
+}
+
+const updateSlidePosition = () => {
+  const container = document.querySelector('.flex.transition-transform')
+  if (container) {
+    container.style.transform = `translateX(-${currentSlide.value * 100}%)`
+  }
+}
+
+const startAutoSlide = () => {
+  slideInterval.value = setInterval(nextSlide, 5000) // Change de slide toutes les 5 secondes
+}
+
+const stopAutoSlide = () => {
+  if (slideInterval.value) {
+    clearInterval(slideInterval.value)
+  }
+}
+
+onMounted(() => {
+  updateSlidePosition()
+  startAutoSlide()
+})
+
+onUnmounted(() => {
+  stopAutoSlide()
+})
+</script>
+
 <template>
     <div class="h-screen w-min-screen bg-hero relative">
-        <!-- Texte et contenu -->
-        <h1 class="flex text-white z-10 text-center font-bold px-40  py-40 text-5xl">
+        <h1 class="flex text-white z-10 text-center font-bold px-40 py-40 text-5xl">
             Déchiffrez l'impossible,<br>Rejoignez l'élite 🚀
         </h1>
+
+        <!-- Statistiques -->
+        <div class="flex justify-center gap-20 text-white z-10 text-center">
+            <div>
+                <p class="text-9xl font-bold">16</p>
+                <p class="text-4xl">Équipes actives</p>
+            </div>
+            <div>
+                <p class="text-9xl font-bold">120</p>
+                <p class="text-4xl">Cryptanalyses complétées</p>
+            </div>
+            <div>
+                <p class="text-9xl font-bold">32</p>
+                <p class="text-4xl">Défis disponibles</p>
+            </div>
+        </div>
 
         <div class="absolute bottom-32 w-full flex justify-center z-10">
             <router-link
@@ -15,9 +79,44 @@
     </div>
 
 
-<!--Carrousel à mettre ici-->
-<!--Fin du carrousel-->
+<!--Carrousel temporaire -->
+<div class="relative w-full overflow-hidden h-140">
+    <!-- Container du carrousel -->
+    <div class="flex transition-transform duration-500 ease-in-out">
+        <div class="w-full flex-shrink-0">
+            <img src="@/public/Logo_Lock.jpg" alt="Slide 1" class="w-full h-96 object-cover">
+        </div>
+        <div class="w-full flex-shrink-0">
+            <img src="@/public/background_index.jpg" alt="Slide 2" class="w-full h-96 object-cover">
+        </div>
+        <div class="w-full flex-shrink-0">
+            <img src="@/public/hard.png" alt="Slide 3" class="w-full h-96 object-cover">
+        </div>
+    </div>
 
+        <!-- Boutons de navigation-->
+        <button 
+            @click="prevSlide" 
+            class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-4 hover:bg-opacity-75 z-20 cursor-pointer">
+            &#8592;
+        </button>
+        <button 
+            @click="nextSlide" 
+            class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-4 hover:bg-opacity-75 z-20 cursor-pointer">
+            &#8594;
+        </button>
+
+        <!-- Indicateurs -->
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+            <button 
+                v-for="n in slides" 
+                :key="n" 
+                @click="goToSlide(n-1)"
+                :class="['w-3 h-3 rounded-full bg-white', currentSlide === n-1 ? 'opacity-100' : 'opacity-50']">
+            </button>
+        </div>
+</div>
+<!--Fin du carrousel-->
 
 <!-- Information du projet -->
 <div class="bg-black w-full min-h-screen pb-20"> 
@@ -57,11 +156,11 @@
         <!-- Colonne de droite-->
         <div class="w-1/4 flex-1 shadow-lg shadow-cyan-500/100 rounded-lg p-6 bg-neutral-900">
             <ul class="text-white text-3xl">
-                <li>Butor Loic (Chef de projet )</li>
-                <li>Lecoustre Malcom</li>
-                <li>Minet Lorik</li>
-                <li>Pierru Mathéo</li>
-                <li>Hallot Hugo </li>
+                <li>• Butor Loic (Chef de projet )</li>
+                <li>• Lecoustre Malcom</li>
+                <li>• Minet Lorik</li>
+                <li>• Pierru Mathéo</li>
+                <li>• Hallot Hugo </li>
             </ul>
         </div>
     </div>  
