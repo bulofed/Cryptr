@@ -112,10 +112,22 @@ const commands = {
         enigmaName = availableEnigmas[index - 1].titre;
       }
       const enigma = await fetchEnigmaByName(enigmaName);
+      console.log("Enigme : ", enigma);
       if (enigma && enigma._id) {
         router.push(`/enigme/${enigma._id}`);
       } else {
         terminalLines.value.push('Enigma not found.');
+      }
+    }
+  },
+  '/inspect': {
+    description: 'Inspect the current enigma',
+    action: async () => {
+      const enigma = await fetchCurrentEnigma();
+      if (enigma) {
+        terminalLines.value.push(`${enigma.textInspect}`);
+      } else {
+        terminalLines.value.push('No enigma found.');
       }
     }
   },
