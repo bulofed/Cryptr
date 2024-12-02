@@ -1,12 +1,13 @@
 <template>
   <div class="flex justify-center mb-12">
-    <div class="bg-slate-950 border p-4 rounded w-screen mx-16 h-48 font-code text-xl relative break-all overflow-y-auto" id="terminal">
+    <div class="bg-slate-950 border p-4 rounded w-screen mx-16 h-52 font-code text-xl relative break-all overflow-y-auto" id="terminal">
       <p v-for="line in terminalLines" :key="line" class="text-slate-50">> {{ line }}</p>
       <p class="text-slate-50">> {{ terminalInput }}<span class="blinking-cursor">_</span></p>
       <input 
         v-model="terminalInput" 
         @keydown.enter="handleEnter" 
         class="absolute top-0 left-0 w-full h-full opacity-0 cursor-default"
+        :maxlength="MAX_CHARS"
         autofocus
       />
     </div>
@@ -18,6 +19,7 @@ const terminalInput = ref('');
 const terminalLines = ref([]);
 const displayText = "Hello, this is a simulated terminal. Type /help for commands.";
 const storyText = "Once upon a time in a digital realm, there was a curious terminal...";
+const MAX_CHARS = 100;
 
 // Commands configuration
 const commands = {
