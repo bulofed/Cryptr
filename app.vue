@@ -8,7 +8,7 @@ const hideLayoutRoutes = ['/inscription', '/connexion']
 const shouldHideLayout = computed(() => {
   return hideLayoutRoutes.includes(route.path) || route.path.startsWith('/enigme')
 })
-</script>
+</script> 
 
 <template>
   <Header v-if="!shouldHideLayout"/>
@@ -16,4 +16,4 @@ const shouldHideLayout = computed(() => {
   <NuxtPage/>
   
   <Footer v-if="!shouldHideLayout"/>
-</template>
+</template> 
