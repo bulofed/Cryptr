@@ -5,7 +5,6 @@
             <NuxtLink to="/dashboard"><b>Dashboard</b></NuxtLink>
             <NuxtLink to="/challenges"><b>Challenges</b></NuxtLink>
             <NuxtLink to="/classement"><b>Classement</b></NuxtLink>
-              <NuxtLink to="/connexion"><b>Connexion</b></NuxtLink>
         </nav>
     </div>
 </template>
