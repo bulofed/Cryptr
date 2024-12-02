@@ -1,7 +1,24 @@
+<script setup>
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { useEnigma } from '~/composable/useEnigma';
+
+const route = useRoute();
+const enigma = ref(null);
+const { fetchCurrentEnigma } = useEnigma();
+
+enigma.value = await fetchCurrentEnigma();
+if (enigma.value && enigma.value.imgPath) {
+  enigma.value.imgPath = enigma.value.imgPath.replace(/^public\//, '');
+}
+
+</script>
+
 <template>
   <div class="flex flex-col h-screen relative bg-hero-pattern bg-cover bg-center bg-no-repeat">
-    <Inventory/>
+    <Inventory />
     <div class="grow">
+      <img v-if="enigma && enigma.imgPath" :src="`/${enigma.imgPath}`" alt="Enigma Image"/>
     </div>
     <Terminal />
   </div>
