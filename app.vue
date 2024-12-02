@@ -1,17 +1,13 @@
-<script setup>
-const route = useRoute()
-
-// Liste des routes où le header/footer ne doivent pas s'afficher
-const hideLayoutRoutes = ['/inscription', '/connexion']
-
-// Vérifie si on doit cacher le layout
-const shouldHideLayout = computed(() => hideLayoutRoutes.includes(route.path))
-</script>
-
 <template>
-  <Header v-if="!shouldHideLayout"/>
+  <div class="[&_*]:text-slate-50 [&_*]:stroke-slate-50 bg-neutral-900 min-h-screen">
+    <Header v-if="name !== 'enigme-id'"/>
+    
+    <NuxtPage />
 
-  <NuxtPage/>
-  
-  <Footer v-if="!shouldHideLayout"/>
+    <Footer v-if="name === 'index'"/>
+  </div>
 </template>
+
+<script setup>
+const { name } = useRoute()
+</script>

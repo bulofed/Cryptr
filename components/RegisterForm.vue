@@ -42,7 +42,7 @@ const onSubmit = () => {
           <button
             class="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-full shadow-sm bg-white hover:bg-gray-200"
           >
-            <img src="~/public/Google__G__logo.svg" alt="Google" class="w-5 h-5" />
+            <IconGoogle class="size-5" />
             <span class="text-gray-700">
               <b>Continuer avec Google</b>
             </span>

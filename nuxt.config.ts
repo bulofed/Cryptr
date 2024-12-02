@@ -7,8 +7,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/color-mode',
     '@nuxt/icon',
-    '@nuxt/image',
-    '@nuxt/test-utils/module'
+    '@nuxt/image'
   ],
   devtools: { enabled: true },
   runtimeConfig: {
