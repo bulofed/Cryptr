@@ -7,16 +7,29 @@ export default defineEventHandler(async (event) => {
       return {
         status: 400,
         success: false,
-        message: 'ID de l\'énigme manquant.'
+        message: 'ID ou nom de l\'énigme manquant.'
       }
     }
 
-    const enigme = await EnigmeModel.findById(id)
+    let enigme;
+
+    const decodedId = decodeURIComponent(id);
+
+    // Vérifie si le paramètre est un ObjectId valide
+    const isValidObjectId = /^[0-9a-fA-F]{24}$/.test(decodedId);
+    if (isValidObjectId) {
+      // Recherche par ID
+      enigme = await EnigmeModel.findById(id);
+    } else {
+      // Recherche par nom (insensible à la casse)
+      enigme = await EnigmeModel.findOne({ Title: { $regex: new RegExp(`^${decodedId}$`, 'i') } });
+    }
+
     if (!enigme) {
       return {
         status: 404,
         success: false,
-        message: `Aucune énigme trouvée avec l'ID : ${id}.`
+        message: `Aucune énigme trouvée avec l'ID ou le nom : ${decodedId}.`
       }
     }
 
