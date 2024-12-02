@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
       enigme = await EnigmeModel.findById(id);
     } else {
       // Recherche par nom (insensible à la casse)
-      enigme = await EnigmeModel.findOne({ Title: { $regex: new RegExp(`^${decodedId}$`, 'i') } });
+      enigme = await EnigmeModel.findOne({ title: { $regex: new RegExp(`^${decodedId}$`, 'i') } });
     }
 
     if (!enigme) {
