@@ -15,12 +15,30 @@
 </template>
 
 <script setup>
+const route = useRoute();
 const terminalInput = ref('');
 const terminalLines = ref([]);
 const displayText = "Hello, this is a simulated terminal. Type /help for commands.";
 const storyText = "Once upon a time in a digital realm, there was a curious terminal...";
 const MAX_CHARS = 100;
 let interrupted = false;
+
+const fetchCurrentEnigma = async () => {
+  try {
+    const id = route.params.id;
+    if (!id) {
+      return null;
+    }
+    const response = await $fetch(`/api/enigmes/${id}`);
+    if (response.success && response.data) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.error('Failed to fetch enigma:', error);
+    return null;
+  }
+};
 
 // Commands configuration
 const commands = {
@@ -30,6 +48,17 @@ const commands = {
       Object.entries(commands).forEach(([cmd, info]) => {
         terminalLines.value.push(`${cmd}: ${info.description}`);
       });
+    }
+  },
+  '/enigmas': {
+    description: 'Show current enigma description',
+    action: async () => {
+      const enigma = await fetchCurrentEnigma();
+      if (enigma && enigma.description) {
+        typeText(enigma.description);
+      } else {
+        terminalLines.value.push('No dialog found.');
+      }
     }
   },
   '/story': {
@@ -80,7 +109,7 @@ const typeText = async (text) => {
       break;
     }
     terminalInput.value += text[i];
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await new Promise(resolve => setTimeout(resolve, 35));
   }
 
   document.removeEventListener('keydown', handleCtrlC);
