@@ -20,6 +20,7 @@ const terminalLines = ref([]);
 const displayText = "Hello, this is a simulated terminal. Type /help for commands.";
 const storyText = "Once upon a time in a digital realm, there was a curious terminal...";
 const MAX_CHARS = 100;
+let interrupted = false;
 
 // Commands configuration
 const commands = {
@@ -63,11 +64,26 @@ const handleEnter = () => {
   }
 };
 
+const handleCtrlC = (e) => {
+  if (e.ctrlKey && e.key === 'c') {
+    interrupted = true;
+  }
+};
+
 const typeText = async (text) => {
+  interrupted = false;
+  document.addEventListener('keydown', handleCtrlC);
+
   for (let i = 0; i < text.length; i++) {
+    if (interrupted) {
+      terminalInput.value = text; // Show full text immediately
+      break;
+    }
     terminalInput.value += text[i];
     await new Promise(resolve => setTimeout(resolve, 50));
   }
+
+  document.removeEventListener('keydown', handleCtrlC);
   handleEnter();
 };
 
