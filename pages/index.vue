@@ -1,5 +1,8 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useSession } from '~/composable/useSession'
+
+const { user, loadSession, clearSession } = useSession()
 
 const currentSlide = ref(0)
 const slides = ref(3) 
@@ -37,7 +40,13 @@ const stopAutoSlide = () => {
   }
 }
 
+const logout = () => {
+  clearSession()
+  location.reload() // Reload the page to reflect the changes
+}
+
 onMounted(() => {
+  loadSession()
   updateSlidePosition()
   startAutoSlide()
 })
@@ -52,6 +61,11 @@ onUnmounted(() => {
         <h1 class="flex text-white z-10 text-center font-bold px-40 py-40 text-5xl">
             Déchiffrez l'impossible,<br>Rejoignez l'élite 🚀
         </h1>
+
+        <div v-if="user" class="absolute top-4 right-4 text-white text-xl flex items-center space-x-4">
+            <span>Bienvenue, {{ user.username }}!</span>
+            <button @click="logout" class="py-2 px-4 bg-red-600 hover:bg-red-700 text-white rounded">Déconnexion</button>
+        </div>
 
         <!-- Statistiques -->
         <div class="flex justify-center gap-20 text-white z-10 text-center">
@@ -167,10 +181,6 @@ onUnmounted(() => {
 
 </div>
 </template>
-
-
-
-
 
 <style>
 .bg-hero {
