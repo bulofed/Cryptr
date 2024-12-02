@@ -4,10 +4,12 @@ const utilisateurSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true },
   motDePasse: { type: String, required: true },
-  progresEnigmes: [
+  unlockedEnigmas: [
     {
       titre: { type: String, required: true },
-      niveauDifficulte: { type: Number, required: true }
+      niveauDifficulte: { type: Number, required: true },
+      nombreEssais: { type: Number, default: 0 },
+      etat : { type: String},
     }
   ],
 
