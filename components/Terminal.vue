@@ -2,8 +2,12 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useSession } from '~/composable/useSession';
+import { useEnigma } from '~/composable/useEnigma';
+
 
 const { user, loadSession } = useSession();
+const { fetchCurrentEnigma } = useEnigma();
+
 const route = useRoute();
 const router = useRouter();
 const terminalInput = ref('');
@@ -12,24 +16,6 @@ const displayText = "Hello, this is a simulated terminal. Type /help for command
 const MAX_CHARS = 100;
 let interrupted = false;
 let availableEnigmas = []; 
-
-const fetchCurrentEnigma = async () => {
-  try {
-    const id = route.params.id;
-    if (!id) {
-      return null;
-    }
-    const response = await $fetch(`/api/enigmes/${id}`);
-    console.log(response);
-    if (response.success && response.data) {
-      return response.data;
-    }
-    return null;
-  } catch (error) {
-    console.error('Failed to fetch enigma:', error);
-    return null;
-  }
-};
 
 const fetchUser = async (username) => {
   try {
