@@ -8,12 +8,20 @@ const hideLayoutRoutes = ['/inscription', '/connexion']
 const shouldHideLayout = computed(() => {
   return hideLayoutRoutes.includes(route.path) || route.path.startsWith('/enigme')
 })
+
+// Vérifie si on est sur la page Challenge
+const isChallengePage = computed(() => {
+  return route.path === '/challenge'
+})
 </script> 
 
 <template>
-  <Header v-if="!shouldHideLayout"/>
+  <Header 
+    v-if="!shouldHideLayout" 
+    :isChallengePage="isChallengePage"
+  />
 
   <NuxtPage/>
   
   <Footer v-if="!shouldHideLayout"/>
-</template> 
+</template>
