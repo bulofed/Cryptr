@@ -1,5 +1,20 @@
+<template>
+  <div class="flex justify-center mb-12">
+    <div class="bg-slate-950 border p-4 rounded w-screen mx-16 h-52 font-code text-xl relative break-all overflow-y-auto" id="terminal">
+      <input 
+        v-model="terminalInput"
+        @input="scrollToBottom"
+        @keydown.enter="handleEnter" 
+        class="absolute top-0 left-0 w-full h-full opacity-0 cursor-default"
+        :maxlength="MAX_CHARS"
+        autofocus
+      />
+      <p v-for="line in terminalLines" :key="line" class="text-slate-50">> {{ line }}</p>
+      <p class="text-slate-50">> {{ terminalInput }}<span class="blinking-cursor">_</span></p>
+    </div>
+  </div>
+</template>
 <script setup>
-import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useSession } from '~/composable/useSession';
 import { useEnigma } from '~/composable/useEnigma';
@@ -52,7 +67,7 @@ const commands = {
     description: 'Show available commands',
     action: () => {
       Object.entries(commands).forEach(([cmd, info]) => {
-        terminalLines.value.push(`${cmd}: ${info.description}`);
+        nextTick(terminalLines.value.push(`${cmd}: ${info.description}`));
       });
     }
   },
@@ -120,6 +135,27 @@ const commands = {
   '/clear': {
     description: 'Clear terminal',
     action: () => terminalLines.value = []
+  },
+  '/try': {
+    description: 'Try a solution for the current enigma',
+    action: async (arg) => {
+      if (!arg) {
+        terminalLines.value.push('Usage: /try <your-solution>');
+        return;
+      }
+      
+      const enigma = await fetchCurrentEnigma();
+      if (!enigma) {
+        terminalLines.value.push('No active enigma found.');
+        return;
+      }
+
+      if (arg === enigma.solution) {
+        terminalLines.value.push('Correct! You solved the enigma! 🎉');
+      } else {
+        terminalLines.value.push('Wrong solution. Try again!');
+      }
+    }
   }
 };
 
@@ -133,6 +169,14 @@ const executeCommand = (input) => {
   return false;
 };
 
+const scrollToBottom = () => {
+  nextTick(() => {
+    const terminal = document.getElementById('terminal');
+    const bottomElement = terminal.lastChild;
+    bottomElement.scrollIntoView({ behavior: 'instant', block: 'end' });
+  });
+};
+
 const handleEnter = () => {
   const input = terminalInput.value.trim();
   if (input !== '') {
@@ -141,9 +185,7 @@ const handleEnter = () => {
       terminalLines.value.push(input);
     }
   }
-  if (terminalLines.value.length > 5) {
-    terminalLines.value.shift();
-  }
+  scrollToBottom();
 };
 
 const handleCtrlC = (e) => {
