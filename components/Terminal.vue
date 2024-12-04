@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { useSession } from '~/composable/useSession';
 import { useEnigma } from '~/composable/useEnigma';
 
@@ -7,7 +7,6 @@ import { useEnigma } from '~/composable/useEnigma';
 const { user, loadSession } = useSession();
 const { fetchCurrentEnigma } = useEnigma();
 
-const route = useRoute();
 const router = useRouter();
 const terminalInput = ref('');
 const terminalLines = ref([]);
@@ -155,9 +154,8 @@ const executeCommand = (input) => {
 
 const scrollToBottom = () => {
   nextTick(() => {
-    const terminal = document.getElementById('terminal');
-    const bottomElement = terminal.lastChild;
-    bottomElement.scrollIntoView({ behavior: 'instant', block: 'end' });
+    const terminal = document.querySelector('.terminal-content');
+    terminal.scrollTop = terminal.scrollHeight;
   });
 };
 
@@ -203,13 +201,15 @@ onMounted(() => {
 
 <template>
   <div class="flex justify-center mb-12">
-    <div class="bg-slate-950 border p-4 rounded w-screen mx-16 h-52 font-code text-xl relative break-all overflow-y-auto" id="terminal">
-      <p v-for="line in terminalLines" :key="line" class="text-slate-50">> {{ line }}</p>
-      <p class="text-slate-50">> {{ terminalInput }}<span class="blinking-cursor">_</span></p>
+    <div class="bg-slate-950 border p-4 rounded w-screen mx-16 h-52 font-code text-xl relative" id="terminal">
+      <div class="terminal-content h-full overflow-y-auto">
+        <p v-for="line in terminalLines" :key="line" class="text-slate-50">> {{ line }}</p>
+        <p class="text-slate-50">> {{ terminalInput }}<span class="blinking-cursor">_</span></p>
+      </div>
       <input 
-        v-model="terminalInput" 
+        v-model="terminalInput"
         @keydown.enter="handleEnter" 
-        class="absolute top-0 left-0 w-full h-full opacity-0 cursor-default"
+        class="absolute bottom-0 left-0 w-full h-full opacity-0 cursor-default"
         :maxlength="MAX_CHARS"
         autofocus
       />
@@ -218,16 +218,30 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.terminal-content {
+  scrollbar-width: thin;
+  scrollbar-color: #4B5563 transparent;
+}
+
+.terminal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-content::-webkit-scrollbar-thumb {
+  background-color: #4B5563;
+  border-radius: 4px;
+}
+
 .blinking-cursor {
   animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
-  from, to {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
 }
 </style>
