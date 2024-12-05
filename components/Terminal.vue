@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router';
 import { useSession } from '~/composable/useSession';
 import { useEnigma } from '~/composable/useEnigma';
+//import EnigmeModel from '~/server/models/Enigme';
 
 
 const { user, loadSession } = useSession();
@@ -96,7 +97,6 @@ const commands = {
         enigmaName = availableEnigmas[index - 1].titre;
       }
       const enigma = await fetchEnigmaByName(enigmaName);
-      console.log("Enigme : ", enigma);
       if (enigma && enigma._id) {
         router.push(`/enigme/${enigma._id}`);
       } else {
@@ -133,8 +133,43 @@ const commands = {
         return;
       }
 
-      if (arg === enigma.solution) {
-        terminalLines.value.push('Correct! You solved the enigma! 🎉');
+      if (arg === enigma.solution) { 
+        terminalLines.value.push('Correct! You solved it! 🎉');
+
+        if (user.value) {
+
+          const userData = await fetchUser(user.value.username);
+          if (userData && userData.unlockedEnigmas) {
+            const enigmaIndex = userData.unlockedEnigmas.findIndex(e => e.titre === enigma.title);
+            if (enigmaIndex !== -1) { // passe l'etat de l'enigme à solved
+              userData.unlockedEnigmas[enigmaIndex].etat = 'solved';
+              console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",user.value.username);
+              await $fetch(`/api/utilisateurs/${user.value.username}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  unlockedEnigmas: userData.unlockedEnigmas
+                })
+              });
+            }
+            if (enigma.unlockedEnigma !== -1)  { // débloque les potentielles enigmes suivantes
+              const newEnigma = await fetchEnigmaByName(enigma.unlockedEnigma);
+              if (newEnigma) {
+                userData.unlockedEnigmas.push({
+                  titre: newEnigma.titre,
+                  etat: 'available',
+                  niveauDifficulte: newEnigma.niveauDifficulte //peut pas marcher newenigma ne contient pas niveauDifficulte
+                });
+                await $fetch(`/api/utilisateurs/${user.value.username}`, {
+                  method: 'PATCH',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(userData)
+                });
+              }
+            }
+            
+          }
+        }
       } else {
         terminalLines.value.push('Wrong solution. Try again!');
       }
