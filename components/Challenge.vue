@@ -56,7 +56,7 @@ onMounted(() => {
     <div 
       v-for="enigme in enigmes" 
       :key="enigme._id" 
-      class="challenge-card border border-bl rounded-lg p-4 bg-white shadow-md relative min-h-[240px] transition-all duration-300"
+      class="challenge-card border border-bl rounded-lg p-4 bg-white shadow-md relative min-h-[240px] transition-all duration-300 cursor-pointer"
       :class="{
         'hover:shadow-[4px_4px_0_0_rgba(34,197,94,0.6)]': enigme.difficultyLevel === 0,
         'hover:shadow-[4px_4px_0_0_rgba(234,179,8,0.6)]': enigme.difficultyLevel === 1,
@@ -110,6 +110,7 @@ onMounted(() => {
 
 .challenge-card:hover {
   transform: translateY(-15px);
+  cursor: pointer;
 }
 
 .difficulty-tag {
