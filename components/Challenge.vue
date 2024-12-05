@@ -34,10 +34,14 @@ const goToEnigma = (id) => {
 onMounted(() => {
   fetchEnigmes();
 });
+
+const sortedEnigmes = computed(() => {
+  return [...enigmes.value].sort((a, b) => a.difficultyLevel - b.difficultyLevel)
+})
 </script>
 
 <template>
-<div class="challenges-section text-center p-8">
+<div class="challenges-section text-center p-8 bg-gray-100">
   <h1 class="text-3xl font-bold mb-10">Challenges</h1>
 
   <!-- États -->
@@ -52,19 +56,19 @@ onMounted(() => {
   </div>
 
   <!-- Grille d'énigmes -->
-  <div v-else class="challenges-grid grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-    <div 
-      v-for="enigme in enigmes" 
-      :key="enigme._id" 
-      class="challenge-card border border-bl rounded-lg p-4 bg-white shadow-md relative min-h-[240px] transition-all duration-300 cursor-pointer"
-      :class="{
-        'hover:shadow-[4px_4px_0_0_rgba(34,197,94,0.6)]': enigme.difficultyLevel === 0,
-        'hover:shadow-[4px_4px_0_0_rgba(234,179,8,0.6)]': enigme.difficultyLevel === 1,
-        'hover:shadow-[4px_4px_0_0_rgba(249,115,22,0.6)]': enigme.difficultyLevel === 2,
-        'hover:shadow-[4px_4px_0_0_rgba(239,68,68,0.6)]': enigme.difficultyLevel === 3
-      }"
-      @click="goToEnigma(enigme._id)"
-    >
+  <div class="challenges-grid grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div v-for="enigme in sortedEnigmes" 
+        :key="enigme._id" 
+        class="challenge-card border border-bl rounded-lg p-4 bg-white shadow-md relative min-h-[240px] transition-all duration-300"
+        :class="{
+          'hover:shadow-[4px_4px_0_0_rgba(34,197,94,0.6)]': enigme.difficultyLevel === 0,
+          'hover:shadow-[4px_4px_0_0_rgba(234,179,8,0.6)]': enigme.difficultyLevel === 1,
+          'hover:shadow-[4px_4px_0_0_rgba(249,115,22,0.6)]': enigme.difficultyLevel === 2,
+          'hover:shadow-[4px_4px_0_0_rgba(239,68,68,0.6)]': enigme.difficultyLevel === 3
+        }"
+        @click="goToEnigma(enigme._id)"
+        >
+
       <!-- Titre et Description -->
       <h2 class="text-2xl font-semibold">{{ enigme.title }}</h2>
       <p class="text-base text-gray-500 mt-6 text-lg">{{ enigme.description }}</p>
