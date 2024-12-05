@@ -1,30 +1,19 @@
 <script setup>
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Cookies from 'js-cookie';
-import { handleLogin } from "../server/handlers/loginHandler";
+import { handleConnexion } from '~/composable/handleConnexion';
 
 const router = useRouter();
 
 const rememberMe = ref(false);
-
 const emailOrUsername = ref('');
 const password = ref('');
 
 const onSubmit = async () => {
-
-  const response = await handleLogin(emailOrUsername.value, password.value);
-
-  if (response.status === 200) {
-    Cookies.set('session', JSON.stringify(response.user), { expires: rememberMe.value ? 7 : null });
-
-    // Rediriger l'utilisateur vers la page d'accueil ou une autre page
-    router.push('/');
+  if (rememberMe.value) {
+    handleConnexion(router, emailOrUsername.value, password.value, 7);
   } else {
-    // Afficher un message d'erreur
-    alert(response.message);
-  }
-
+    handleConnexion(router, emailOrUsername.value, password.value);
+  };
 };
 </script>
 
