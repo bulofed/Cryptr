@@ -1,5 +1,4 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
 import { useSession } from '~/composable/useSession'
 
 const { user, loadSession, clearSession } = useSession()
@@ -45,6 +44,13 @@ const logout = () => {
   location.reload() // Reload the page to reflect the changes
 }
 
+const getLastUnlockedEnigma = () => {
+  if (user.value && user.value.unlockedEnigmas && user.value.unlockedEnigmas.length > 0) {
+    return user.value.unlockedEnigmas[user.value.unlockedEnigmas.length - 1]
+  }
+  return null
+}
+
 onMounted(() => {
   loadSession()
   updateSlidePosition()
@@ -85,9 +91,10 @@ onUnmounted(() => {
 
         <div class="absolute bottom-32 w-full flex justify-center z-10">
             <router-link
-                to="/connexion"
-                class="py-2 px-6 w-80 h-16 rounded-full text-sm text-white bg-cyan-600 hover:bg-red-700 text-xl text-center flex items-center justify-center">
-                Commencer le challenge
+                v-if="getLastUnlockedEnigma()"
+                :to="user ? `/enigme/${getLastUnlockedEnigma()._id}` : '/connexion'"
+                class="py-2 px-6 w-80 h-16 rounded-full text-white bg-cyan-600 hover:bg-red-700 text-xl text-center flex items-center justify-center">
+                {{ user ? 'Continuer le challenge' : 'Commencer le challenge' }}
             </router-link>
         </div>
     </div>
