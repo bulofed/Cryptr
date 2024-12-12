@@ -1,5 +1,6 @@
 <script setup>
 import { useSession } from '~/composable/useSession'
+import LogOut from './icon/LogOut.vue';
 
 defineProps({
   isChallengePage: {
@@ -34,7 +35,7 @@ onMounted(() => {
       <NuxtLink to="/challenge"><b>Challenge</b></NuxtLink>
       <NuxtLink to="/classement"><b>Classement</b></NuxtLink>
       <NuxtLink to="/connexion" v-if="!user"><b>Connexion</b></NuxtLink>
-      <button @click="logout" v-else>Déconnexion</button>
+      <button @click="logout" v-else><LogOut /></button>
     </nav>
   </div>
 </template>
