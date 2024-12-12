@@ -9,17 +9,16 @@ const shouldHideLayout = computed(() => {
   return hideLayoutRoutes.includes(route.path) || route.path.startsWith('/enigme')
 })
 
-// Vérifie si on est sur la page Challenge ou Classement
-const isLightThemePage = computed(() => {
-  const lightThemeRoutes = ['/challenge', '/classement']
-  return lightThemeRoutes.includes(route.path)
+// Vérifie si on est sur la page Challenge
+const isChallengePage = computed(() => {
+  return route.path === '/challenge'
 })
-</script>
+</script> 
 
 <template>
   <Header 
     v-if="!shouldHideLayout" 
-    :isChallengePage="isLightThemePage"
+    :isChallengePage="isChallengePage"
   />
 
   <NuxtPage/>
