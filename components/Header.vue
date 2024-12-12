@@ -1,4 +1,6 @@
 <script setup>
+import { useSession } from '~/composable/useSession'
+
 defineProps({
   isChallengePage: {
     type: Boolean,
@@ -8,6 +10,17 @@ defineProps({
     type: Boolean,
     default: false
   }
+})
+
+const { user, loadSession, clearSession } = useSession()
+
+const logout = () => {
+  clearSession()
+  location.reload()
+}
+
+onMounted(() => {
+  loadSession()
 })
 </script>
 
@@ -24,6 +37,8 @@ defineProps({
       <NuxtLink to="/dashboard"><b>Dashboard</b></NuxtLink>
       <NuxtLink to="/challenge"><b>Challenge</b></NuxtLink>
       <NuxtLink to="/classement"><b>Classement</b></NuxtLink>
+      <NuxtLink to="/connexion" v-if="!user"><b>Connexion</b></NuxtLink>
+      <button @click="logout" v-else>Déconnexion</button>
     </nav>
   </div>
 </template>
