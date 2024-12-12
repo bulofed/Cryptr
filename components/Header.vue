@@ -15,12 +15,16 @@ onMounted(() => {
 const route = useRoute()
 
 const isIndexRoute = computed(() => route.path === '/')
+const isSpecialRoute = computed(() => route.path === '/challenge' || route.path === '/classement')
 </script>
 
 <template>
   <div
     class="flex items-center justify-between px-16 py-3 z-20 w-full"
-    :class="isIndexRoute ? 'absolute top-0 text-white fill-white' : 'relative text-black fill-black'">
+    :class="[
+      isIndexRoute ? 'absolute top-0 text-white fill-white' : 'relative text-black fill-black',
+      isSpecialRoute ? 'bg-gray-100' : ''
+    ]">
     <NuxtLink to="/">
       <IconLogo class="size-12"/>
     </NuxtLink>
