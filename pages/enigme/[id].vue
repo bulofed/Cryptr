@@ -15,11 +15,8 @@ if (enigma.value && enigma.value.imgPath) {
 </script>
 
 <template>
-  <div class="flex flex-col h-screen relative bg-hero-pattern bg-cover bg-center bg-no-repeat">
-    <div class="relative">
-      <Header/>
-      <Inventory class="absolute top-0 left-1/2 transform -translate-x-1/2 z-20"/>
-    </div>
+  <div class="flex flex-col py-4 h-screen relative bg-hero-pattern bg-cover bg-center bg-no-repeat">
+    <Inventory />
     
     <div class="grow flex items-center justify-center">
       <img 
@@ -29,6 +26,7 @@ if (enigma.value && enigma.value.imgPath) {
         style="width: 15%"
       />
     </div>
+
     <Terminal />
   </div>
 </template>
