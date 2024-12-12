@@ -1,7 +1,8 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useSession } from '~/composable/useSession'
 
-const { loadSession, clearSession } = useSession()
+const { user, loadSession, clearSession } = useSession()
 
 const currentSlide = ref(0)
 const slides = ref(3) 
@@ -41,7 +42,7 @@ const stopAutoSlide = () => {
 
 const logout = () => {
   clearSession()
-  location.reload()
+  location.reload() // Reload the page to reflect the changes
 }
 
 onMounted(() => {
@@ -56,12 +57,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="h-screen w-min-screen bg-hero">
-        <h1 class="flex text-white z-10 text-center font-bold px-40 pt-20 text-5xl">
+    <div class="h-screen w-min-screen bg-hero relative">
+        <h1 class="flex text-white z-10 text-center font-bold px-40 py-40 text-5xl">
             Déchiffrez l'impossible,<br>Rejoignez l'élite 🚀
         </h1>
 
-        <div class="flex justify-center gap-20 text-white z-10 pt-20 text-center">
+        <!-- Statistiques -->
+        <div class="flex justify-center gap-20 text-white z-10 text-center">
             <div>
                 <p class="text-9xl font-bold">16</p>
                 <p class="text-4xl">Équipes actives</p>
@@ -76,7 +78,7 @@ onUnmounted(() => {
             </div>
         </div>
 
-        <div class="flex justify-center z-10 pt-20">
+        <div class="absolute bottom-32 w-full flex justify-center z-10">
             <router-link
                 to="/connexion"
                 class="py-2 px-6 w-80 h-16 rounded-full text-white bg-cyan-600 hover:bg-red-700 text-xl text-center flex items-center justify-center">
