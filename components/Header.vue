@@ -25,7 +25,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex items-center justify-between px-16 py-3 z-20 top-0 left-0 w-full transition-colors duration-300"
+  <div class="absolute flex items-center justify-between px-16 py-3 z-20 top-0 left-0 w-full transition-colors duration-300"
        :class="[(isChallengePage || isClassementPage) ? 'bg-zinc-100 text-black' : 'bg-[#02001B] text-white']">
     <NuxtLink to="/">
       <IconLogo 
