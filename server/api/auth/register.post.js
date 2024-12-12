@@ -1,10 +1,11 @@
 import UtilisateurModel from "~/server/models/Utilisateur";
+import EnigmeModel from "~/server/models/Enigme";
 import bcrypt from "bcrypt";
 
 export default defineEventHandler(async (event) => {
-    try{
+    try {
         const body = await readBody(event);
-        if (!body || !body.username || !body.email || !body.motDePasse){
+        if (!body || !body.username || !body.email || !body.motDePasse) {
             return {
                 status: 400,
                 success: false,
@@ -13,7 +14,7 @@ export default defineEventHandler(async (event) => {
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(body.email)){
+        if (!emailRegex.test(body.email)) {
             return {
                 status: 400,
                 success: false,
@@ -21,12 +22,29 @@ export default defineEventHandler(async (event) => {
             };
         }
 
+        const enigma = await EnigmeModel.findById(body.enigmaId);
+        if (!enigma) {
+            return {
+                status: 404,
+                success: false,
+                message: "Enigma not found."
+            };
+        }
+
+
         const newUser = new UtilisateurModel({
             username: body.username,
             email: body.email,
-            motDePasse: body.motDePasse
+            motDePasse: body.motDePasse,
+            unlockedEnigmas: [{
+                titre: enigma.title,
+                niveauDifficulte: enigma.difficultyLevel,
+                nombreEssais: 0,
+                etat: 'available'
+              }],
         });
-        
+
+
         newUser.motDePasse = await bcrypt.hash(newUser.motDePasse, 10);
 
         const result = await newUser.save();
@@ -36,7 +54,7 @@ export default defineEventHandler(async (event) => {
             message: "Utilisateur créé avec succès.",
             data: result
         };
-    } catch(err){
+    } catch (err) {
         console.error("Erreur lors de la création de l'utilisateur :", err);
         return {
             status: 500,

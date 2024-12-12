@@ -1,25 +1,40 @@
 <script setup>
+import { useSession } from '~/composable/useSession'
+
 defineProps({
   isChallengePage: {
     type: Boolean,
     default: false
   }
 })
+
+const { user, loadSession, clearSession } = useSession()
+
+const logout = () => {
+  clearSession()
+  location.reload()
+}
+
+onMounted(() => {
+  loadSession()
+})
 </script>
 
 <template>
-    <div class="flex items-center justify-between px-16 py-3 z-20 top-0 left-0 w-full transition-colors duration-300"
-         :class="[isChallengePage ? 'bg-white text-black' : 'bg-[#02001B] text-white']">
-      <NuxtLink to="/">
-        <IconLogo 
-          class="size-12" 
-          :class="[isChallengePage ? 'fill-black' : 'fill-white']"
-        />
-      </NuxtLink>
-      <nav class="flex space-x-8 text-base font-sans">
-        <NuxtLink to="/dashboard"><b>Dashboard</b></NuxtLink>
-        <NuxtLink to="/challenge"><b>Challenge</b></NuxtLink>
-        <NuxtLink to="/classement"><b>Classement</b></NuxtLink>
-      </nav>
-    </div>
-  </template>
+  <div class="flex items-center justify-between px-16 py-3 z-20 top-0 left-0 w-full transition-colors duration-300"
+       :class="[(isChallengePage || isClassementPage) ? 'bg-gray-100 text-black' : 'bg-[#02001B] text-white']">
+    <NuxtLink to="/">
+      <IconLogo 
+        class="size-12" 
+        :class="[(isChallengePage || isClassementPage) ? 'fill-black' : 'fill-white']"
+      />
+    </NuxtLink>
+    <nav class="flex space-x-8 text-base font-sans">
+      <NuxtLink to="/dashboard"><b>Dashboard</b></NuxtLink>
+      <NuxtLink to="/challenge"><b>Challenge</b></NuxtLink>
+      <NuxtLink to="/classement"><b>Classement</b></NuxtLink>
+      <NuxtLink to="/connexion" v-if="!user"><b>Connexion</b></NuxtLink>
+      <button @click="logout" v-else>Déconnexion</button>
+    </nav>
+  </div>
+</template>

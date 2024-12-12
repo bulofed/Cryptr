@@ -17,8 +17,8 @@ if (enigma.value && enigma.value.imgPath) {
 <template>
   <div class="flex flex-col h-screen relative bg-hero-pattern bg-cover bg-center bg-no-repeat">
     <Inventory />
-    <div class="grow">
-      <img v-if="enigma && enigma.imgPath" :src="`/${enigma.imgPath}`" alt="Enigma Image" style="width: 15%"/>
+    <div class="grow flex justify-center">
+      <img v-if="enigma && enigma.imgPath" :src="`/${enigma.imgPath}`" alt="Enigma Image" style="width: 15%" />
     </div>
     <Terminal />
   </div>

@@ -62,11 +62,6 @@ onUnmounted(() => {
             Déchiffrez l'impossible,<br>Rejoignez l'élite 🚀
         </h1>
 
-        <div v-if="user" class="absolute top-4 right-4 text-white text-xl flex items-center space-x-4">
-            <span>Bienvenue, {{ user.username }}!</span>
-            <button @click="logout" class="py-2 px-4 bg-red-600 hover:bg-red-700 text-white rounded">Déconnexion</button>
-        </div>
-
         <!-- Statistiques -->
         <div class="flex justify-center gap-20 text-white z-10 text-center">
             <div>
@@ -86,7 +81,7 @@ onUnmounted(() => {
         <div class="absolute bottom-32 w-full flex justify-center z-10">
             <router-link
                 to="/connexion"
-                class="py-2 px-6 w-80 h-16 rounded-full text-sm text-white bg-cyan-600 hover:bg-red-700 text-xl text-center flex items-center justify-center">
+                class="py-2 px-6 w-80 h-16 rounded-full text-white bg-cyan-600 hover:bg-red-700 text-xl text-center flex items-center justify-center">
                 Commencer le challenge
             </router-link>
         </div>
