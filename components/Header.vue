@@ -1,17 +1,6 @@
 <script setup>
 import { useSession } from '~/composable/useSession'
 
-defineProps({
-  isChallengePage: {
-    type: Boolean,
-    default: false
-  },
-  isClassementPage: {
-    type: Boolean,
-    default: false
-  }
-})
-
 const { user, loadSession, clearSession } = useSession()
 
 const logout = () => {
@@ -22,16 +11,18 @@ const logout = () => {
 onMounted(() => {
   loadSession()
 })
+
+const route = useRoute()
+
+const isIndexRoute = computed(() => route.path === '/')
 </script>
 
 <template>
-  <div class="absolute flex items-center justify-between px-16 py-3 z-20 top-0 left-0 w-full transition-colors duration-300"
-       :class="[(isChallengePage || isClassementPage) ? 'bg-zinc-100 text-black' : 'bg-[#02001B] text-white']">
+  <div
+    class="flex items-center justify-between px-16 py-3 z-20 w-full"
+    :class="isIndexRoute ? 'absolute top-0 text-white fill-white' : 'relative text-black fill-black'">
     <NuxtLink to="/">
-      <IconLogo 
-        class="size-12" 
-        :class="[(isChallengePage || isClassementPage) ? 'fill-black' : 'fill-white']"
-      />
+      <IconLogo class="size-12"/>
     </NuxtLink>
     <nav class="flex space-x-8 text-base font-sans">
       <NuxtLink to="/dashboard"><b>Dashboard</b></NuxtLink>

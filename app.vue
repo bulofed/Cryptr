@@ -8,21 +8,14 @@ const hideLayoutRoutes = ['/inscription', '/connexion']
 const shouldHideLayout = computed(() => {
   return hideLayoutRoutes.includes(route.path) || route.path.startsWith('/enigme')
 })
-
-// Vérifie si on est sur la page Challenge ou Classement
-const isLightThemePage = computed(() => {
-  const lightThemeRoutes = ['/challenge', '/classement']
-  return lightThemeRoutes.includes(route.path)
-})
 </script>
 
 <template>
-  <Header 
-    v-if="!shouldHideLayout" 
-    :isChallengePage="isLightThemePage"
-  />
+  <div class="min-h-screen flex flex-col">
+    <Header v-if="!shouldHideLayout" />
 
-  <NuxtPage/>
-  
-  <Footer v-if="!shouldHideLayout"/>
+    <NuxtPage class="flex-1"/>
+    
+    <Footer v-if="!shouldHideLayout"/>
+  </div>
 </template>

@@ -71,7 +71,7 @@ const sortedEnigmes = computed(() => {
 
       <!-- Titre et Description -->
       <h2 class="text-2xl font-semibold">{{ enigme.title }}</h2>
-      <p class="text-base text-gray-500 mt-6 text-lg">{{ enigme.description }}</p>
+      <p class="text-gray-500 mt-6 text-lg">{{ enigme.description }}</p>
 
       <!-- Statistiques -->
       <div class="stats flex justify-between mt-4 text-sm">
