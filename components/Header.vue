@@ -15,7 +15,7 @@ onMounted(() => {
 const route = useRoute()
 
 const isIndexRoute = computed(() => route.path === '/')
-const isSpecialRoute = computed(() => route.path === '/challenge' || route.path === '/classement')
+const isSpecialRoute = computed(() => route.path === '/challenge' || route.path === '/classement' || route.path === '/dashboard')
 </script>
 
 <template>
