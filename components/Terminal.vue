@@ -14,16 +14,7 @@ const terminalLines = ref([]);
 const displayText = "Hello, this is a simulated terminal. Type /help for commands.";
 const MAX_CHARS = 100;
 let interrupted = false;
-let availableEnigmas = [];
-
-const focusInput = () => {
-  nextTick(() => {
-    const inputElement = document.getElementById('terminal-input');
-    if (inputElement) {
-      inputElement.focus();
-    }
-  });
-};
+let availableEnigmas = []; 
 
 const fetchUser = async (username) => {
   try {
@@ -81,10 +72,11 @@ const commands = {
       if (user.value) {
         const userData = await fetchUser(user.value.username);
         if (userData && userData.unlockedEnigmas) {
-          availableEnigmas = userData.unlockedEnigmas.filter(enigma => enigma.etat.toLowerCase() === 'available');
+          console.log("User data unlockedEnigmas",userData.unlockedEnigmas);
+          availableEnigmas = userData.unlockedEnigmas.filter(enigma => enigma.state.toLowerCase() === 'available');
           if (availableEnigmas.length > 0) {
             availableEnigmas.forEach((enigma, index) => {
-              terminalLines.value.push(`${index + 1} - ${enigma.titre}, Difficulty: ${enigma.niveauDifficulte}`);
+              terminalLines.value.push(`${index + 1} - ${enigma.title}, Difficulty: ${enigma.difficultyLevel}`);
             });
           } else {
             terminalLines.value.push('No available enigmas found.');
@@ -103,7 +95,7 @@ const commands = {
       let enigmaName = arg;
       const index = parseInt(arg, 10);
       if (!isNaN(index) && index > 0 && index <= availableEnigmas.length) {
-        enigmaName = availableEnigmas[index - 1].titre;
+        enigmaName = availableEnigmas[index - 1].title;
       }
       const enigma = await fetchEnigmaByName(enigmaName);
       if (enigma && enigma._id) {
@@ -135,24 +127,23 @@ const commands = {
         terminalLines.value.push('Usage: /try <your-solution>');
         return;
       }
-
+      
       const enigma = await fetchCurrentEnigma();
       if (!enigma) {
         terminalLines.value.push('No active enigma found.');
         return;
       }
 
-      if (arg === enigma.solution) {
+      if (arg === enigma.solution) { 
         terminalLines.value.push('Correct! You solved it! 🎉');
 
         if (user.value) {
 
           const userData = await fetchUser(user.value.username);
           if (userData && userData.unlockedEnigmas) {
-            const enigmaIndex = userData.unlockedEnigmas.findIndex(e => e.titre === enigma.title);
+            const enigmaIndex = userData.unlockedEnigmas.findIndex(e => e.title === enigma.title);
             if (enigmaIndex !== -1) { // passe l'etat de l'enigme à solved
-              userData.unlockedEnigmas[enigmaIndex].etat = 'solved';
-              console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", user.value.username);
+              userData.unlockedEnigmas[enigmaIndex].state = 'solved';
               await $fetch(`/api/utilisateurs/${user.value.username}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
@@ -161,13 +152,13 @@ const commands = {
                 })
               });
             }
-            if (enigma.unlockedEnigma !== -1) { // débloque les potentielles enigmes suivantes
+            if (enigma.unlockedEnigma !== -1)  { // débloque les potentielles enigmes suivantes
               const newEnigma = await fetchEnigmaByName(enigma.unlockedEnigma);
               if (newEnigma) {
                 userData.unlockedEnigmas.push({
-                  titre: newEnigma.titre,
-                  etat: 'available',
-                  niveauDifficulte: newEnigma.niveauDifficulte //peut pas marcher newenigma ne contient pas niveauDifficulte
+                  title: newEnigma.title,
+                  state: 'available',
+                  difficultyLevel: newEnigma.difficultyLevel //peut pas marcher newenigma ne contient pas niveauDifficulte
                 });
                 await $fetch(`/api/utilisateurs/${user.value.username}`, {
                   method: 'PATCH',
@@ -176,7 +167,7 @@ const commands = {
                 });
               }
             }
-
+            
           }
         }
       } else {
@@ -244,38 +235,48 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-slate-950 border p-4 rounded mx-16 h-52 font-code text-xl relative flex flex-col justify-end">
-    <div
-      class="grow overflow-y-auto terminal-content z-10"
-      @click="focusInput"
-    >
-      <p v-for="line in terminalLines" :key="line" class="text-slate-50">> {{ line }}</p>
-      <p class="text-slate-50">> {{ terminalInput }}<span class="blinking-cursor">_</span></p>
+  <div class="flex justify-center mb-12">
+    <div class="bg-slate-950 border p-4 rounded w-screen mx-16 h-52 font-code text-xl relative" id="terminal">
+      <div class="terminal-content h-full overflow-y-auto">
+        <p v-for="line in terminalLines" :key="line" class="text-slate-50">> {{ line }}</p>
+        <p class="text-slate-50">> {{ terminalInput }}<span class="blinking-cursor">_</span></p>
+      </div>
+      <input 
+        v-model="terminalInput"
+        @keydown.enter="handleEnter" 
+        class="absolute bottom-0 left-0 w-full h-full opacity-0 cursor-default"
+        :maxlength="MAX_CHARS"
+        autofocus
+      />
     </div>
-    <input 
-      v-model="terminalInput"
-      @keydown.enter="handleEnter"
-      class="absolute bottom-0 left-0 w-full h-full opacity-0"
-      :maxlength="MAX_CHARS"
-      id="terminal-input"
-    />
   </div>
 </template>
 
 <style scoped>
+.terminal-content {
+  scrollbar-width: thin;
+  scrollbar-color: #4B5563 transparent;
+}
+
+.terminal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-content::-webkit-scrollbar-thumb {
+  background-color: #4B5563;
+  border-radius: 4px;
+}
+
 .blinking-cursor {
   animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
-
-  from,
-  to {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
 }
 </style>

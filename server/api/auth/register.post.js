@@ -5,11 +5,12 @@ import bcrypt from "bcrypt";
 export default defineEventHandler(async (event) => {
     try {
         const body = await readBody(event);
-        if (!body || !body.username || !body.email || !body.motDePasse) {
+        console.log("Body : " , body);
+        if (!body || !body.username || !body.email || !body.password) {
             return {
                 status: 400,
                 success: false,
-                message: "Les champs 'username', 'email', et 'motDePasse' sont requis."
+                message: "Les champs 'username', 'email', et 'password' sont requis."
             };
         }
 
@@ -35,17 +36,17 @@ export default defineEventHandler(async (event) => {
         const newUser = new UtilisateurModel({
             username: body.username,
             email: body.email,
-            motDePasse: body.motDePasse,
+            password: body.password,
             unlockedEnigmas: [{
-                titre: enigma.title,
-                niveauDifficulte: enigma.difficultyLevel,
-                nombreEssais: 0,
-                etat: 'available'
+                title: enigma.title,
+                difficultyLevel: enigma.difficultyLevel,
+                numberOfTry: 0,
+                state: 'available'
               }],
         });
 
 
-        newUser.motDePasse = await bcrypt.hash(newUser.motDePasse, 10);
+        newUser.password = await bcrypt.hash(newUser.password, 10);
 
         const result = await newUser.save();
         return {

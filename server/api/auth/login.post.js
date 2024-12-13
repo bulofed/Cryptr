@@ -3,7 +3,7 @@ import UtilisateurModel from '~/server/models/Utilisateur';
 import bcrypt from 'bcrypt';
 
 export default defineEventHandler(async (event) => {
-  const { identifier, motDePasse, isEmail } = await readBody(event);
+  const { identifier, password, isEmail } = await readBody(event);
 
   try {
     const user = await UtilisateurModel.findOne(
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     );
 
     if (user) {
-      const isPasswordValid = await bcrypt.compare(motDePasse, user.motDePasse);
+      const isPasswordValid = await bcrypt.compare(password, user.password);
       if (isPasswordValid) {
         return {
           status: 200,

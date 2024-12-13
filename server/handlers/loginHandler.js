@@ -3,9 +3,8 @@ const isEmail = (str) => {
     return emailRegex.test(str);
   };
   
-  export const handleLogin = async (emailOrUsername, motDePasse) => {
+  export const handleLogin = async (emailOrUsername, password) => {
     const trimmedInput = emailOrUsername.trim();
-    console.log(`Input received: ${trimmedInput}`);
     const isEmailAddress = isEmail(emailOrUsername);
   
     try {
@@ -13,16 +12,14 @@ const isEmail = (str) => {
         method: 'POST',
         body: {
           identifier: trimmedInput,
-          motDePasse,
+          password,
           isEmail: isEmailAddress,
         },
       });
   
       if (response.status === 200) {
-        console.log('Connexion réussie : ', response.message);
         return response;
       } else {
-        console.log('Connexion échouée:', response.message);
         return response;
       }
     } catch (err) {

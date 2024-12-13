@@ -3,22 +3,22 @@ import mongoose from 'mongoose'
 const utilisateurSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true },
-  motDePasse: { type: String, required: true },
+  password: { type: String, required: true },
   unlockedEnigmas: [
     {
-      titre: { type: String, required: true },
-      niveauDifficulte: { type: Number, required: true },
-      nombreEssais: { type: Number, default: 0 },
-      etat : { type: String},
+      title: { type: String, required: true },
+      difficultyLevel: { type: Number, required: true },
+      numberOfTry: { type: Number, default: 0 },
+      state : { type: String},
     }
   ],
 
-  equipe: {
-    nomEquipe: { type: String },
-    membres: [Number],
-    statistiques: {
-      enigmesResolues: { type: Number, default: 0 },
-      tempsMoyenResolution: { type: Number, default: 0 }
+  team: {
+    teamName: { type: String },
+    members: [String],
+    statistics: {
+      resolvedClue: { type: Number, default: 0 },
+      averageTimeResolution: { type: Number, default: 0 }
     }
   }
 })

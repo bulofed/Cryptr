@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const handleSubmit = async (username, email, motDePasse) => {
+export const handleSubmit = async (username, email, password) => {
     try {
         const enigmaId = new mongoose.Types.ObjectId('674d8105775bbb403acafd06');
 
@@ -9,11 +9,11 @@ export const handleSubmit = async (username, email, motDePasse) => {
             body: {
                 username,
                 email,
-                motDePasse,
+                password,
                 enigmaId
             },
         });
-        
+
         console.log('User registered successfully:', response);
     } catch (err) {
         console.error('Error during user registration:', err);

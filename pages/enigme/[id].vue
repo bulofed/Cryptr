@@ -1,12 +1,11 @@
 <script setup>
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
 import { useEnigma } from '~/composable/useEnigma';
 import Header from '~/components/Header.vue'; // Ajouter l'import du Header
 
-const route = useRoute();
 const enigma = ref(null);
 const { fetchCurrentEnigma } = useEnigma();
+
 
 enigma.value = await fetchCurrentEnigma();
 if (enigma.value && enigma.value.imgPath) {

@@ -3,7 +3,7 @@ import EnigmeModel from '~/server/models/Enigme'
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event)
-    if (!body || !body.titre) {
+    if (!body || !body.title) {
       return {
         status: 400,
         success: false,
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const newEnigme = new EnigmeModel({
-      titre: body.titre
+      title: body.title
     })
 
     const result = await newEnigme.save()

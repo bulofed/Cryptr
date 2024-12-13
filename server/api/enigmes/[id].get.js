@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    let enigme;
+    let enigma;
 
     const decodedId = decodeURIComponent(id);
 
@@ -19,13 +19,13 @@ export default defineEventHandler(async (event) => {
     const isValidObjectId = /^[0-9a-fA-F]{24}$/.test(decodedId);
     if (isValidObjectId) {
       // Recherche par ID
-      enigme = await EnigmeModel.findById(id);
+      enigma = await EnigmeModel.findById(id);
     } else {
       // Recherche par nom (insensible à la casse)
-      enigme = await EnigmeModel.findOne({ title: { $regex: new RegExp(`^${decodedId}$`, 'i') } });
+      enigma = await EnigmeModel.findOne({ title: { $regex: new RegExp(`^${decodedId}$`, 'i') } });
     }
 
-    if (!enigme) {
+    if (!enigma) {
       return {
         status: 404,
         success: false,
@@ -37,10 +37,10 @@ export default defineEventHandler(async (event) => {
       status: 200,
       success: true,
       message: 'Énigme récupérée avec succès.',
-      data: enigme
+      data: enigma
     }
   } catch (err) {
-    console.error('Erreur lors de la récupération de l\'énigme :', err)
+
     return {
       status: 500,
       success: false,
