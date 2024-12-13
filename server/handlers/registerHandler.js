@@ -14,8 +14,13 @@ export const handleSubmit = async (username, email, password) => {
             },
         });
 
-        console.log('User registered successfully:', response);
+        if (response.status === 201) {
+            return response.data;
+        } else {
+            throw new Error(response.message || 'Registration failed');
+        }
     } catch (err) {
         console.error('Error during user registration:', err);
+        throw err;
     }
 };
