@@ -78,7 +78,7 @@ const onSubmit = async () => {
               </p>
             </label>
             <input type="text" id="username"  v-model="formData.username" required placeholder="Entrez nom d'utilisateur"
-              class="block w-full px-3 py-3 border border-gray-300 rounded-full shadow-sm text-xs"
+              class="text-black block w-full px-3 py-3 border border-gray-300 rounded-full shadow-sm text-xs"
             />
           </div>
 
@@ -90,7 +90,7 @@ const onSubmit = async () => {
               </p>
             </label>
             <input type="text" id="email"  v-model="formData.email" required placeholder="Entrez votre mail"
-              class="block w-full px-3 py-3 border border-gray-300 rounded-full shadow-sm text-xs"
+              class="text-black block w-full px-3 py-3 border border-gray-300 rounded-full shadow-sm text-xs"
             />
           </div>
 
@@ -103,7 +103,7 @@ const onSubmit = async () => {
               </p>
             </label>
             <input type="password" id="motDePasse"  v-model="formData.password" required placeholder="Entrez votre mot de passe"
-             class="w-full px-3 py-3 border border-gray-300 rounded-full shadow-sm text-xs"
+             class="text-black w-full px-3 py-3 border border-gray-300 rounded-full shadow-sm text-xs"
             />
           </div>
 
