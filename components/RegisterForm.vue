@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from 'vue-router';
+import Cookies from 'js-cookie';
 import { handleSubmit } from "../server/handlers/registerHandler";
 
 const formData = ref({
@@ -13,8 +14,13 @@ const rememberMe = ref(false);
 const router = useRouter();
 
 const onSubmit = async () => {
-    handleSubmit(formData.value.username, formData.value.email, formData.value.password);
-    router.push('/');
+    try {
+        const user = await handleSubmit(formData.value.username, formData.value.email, formData.value.password);
+        Cookies.set('session', JSON.stringify(user), { expires: rememberMe.value ? 7 : null });
+        router.push('/');
+    } catch (err) {
+        alert('Registration failed: ' + err.message);
+    }
 };
 </script>
 
