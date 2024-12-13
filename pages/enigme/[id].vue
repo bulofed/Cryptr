@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import { useEnigma } from '~/composable/useEnigma';
-import Header from '~/components/Header.vue'; // Ajouter l'import du Header
 
 const enigma = ref(null);
 const { fetchCurrentEnigma } = useEnigma();
@@ -14,6 +13,9 @@ if (enigma.value && enigma.value.imgPath) {
 </script>
 
 <template>
+  <NuxtLink to="/challenge" class="absolute top-8 left-8 cursor-pointer z-10">
+    <IconChevronLeft class="size-12 stroke-white"/>
+  </NuxtLink>
   <div class="flex flex-col py-4 h-screen relative bg-hero-pattern bg-cover bg-center bg-no-repeat">
     <Inventory />
     
