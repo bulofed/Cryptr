@@ -1,21 +1,36 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useSession } from '~/composable/useSession';
+import { fetchUser } from '~/composable/useUser';
 
 const enigmes = ref([]);
 const loading = ref(true);
 const error = ref(null);
 const router = useRouter();
+const { user, loadSession } = useSession();
 
 const fetchEnigmes = async () => {
   try {
     loading.value = true;
     const response = await $fetch('/api/enigmes');
-    console.log('Réponse API:', response);
     
     if (response.success) {
-      enigmes.value = response.data;
-      console.log('Énigmes chargées:', enigmes.value);
+      const allEnigmas = response.data;
+      
+      const userData = await fetchUser(user.value.username);
+      
+      if (userData && userData.unlockedEnigmas) {
+        enigmes.value = allEnigmas.map(enigma => ({
+          ...enigma,
+          isUnlocked: userData.unlockedEnigmas.some(unlocked => unlocked.title === enigma.title)
+        }));
+      } else {
+        enigmes.value = allEnigmas.map(enigma => ({
+          ...enigma,
+          isUnlocked: false
+        }));
+      }
     } else {
       error.value = 'Erreur de chargement';
     }
@@ -32,6 +47,7 @@ const goToEnigma = (id) => {
 };
 
 onMounted(() => {
+  loadSession();
   fetchEnigmes();
 });
 
