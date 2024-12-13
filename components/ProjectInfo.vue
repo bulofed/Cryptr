@@ -1,7 +1,7 @@
 <template>
   <div class="bg-black w-full min-h-screen pb-20"> 
     <div class="text-white text-3xl text-center font-bold pt-10">
-      <h1>Comment ça marche ? </h1>
+      <h1>Comment ça marche ?</h1>
     </div>
 
     <div class="flex justify-center items-center gap-20 px-20 py-40 text-xl">
