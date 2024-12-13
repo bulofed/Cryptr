@@ -13,10 +13,10 @@ const enigmeSchema = new mongoose.Schema({
     tries : { type: Number },
     averageResolutionTime : { type: Number }
   },
-  unlockedClues : { type: [String] },
+  unlocksClues : { type: [String] },
   imgPath : { type: String },
   textInspect : { type: String },
-  unlockedEnigma : { type: [String] },
+  unlocksEnigmas : { type: [String] },
 })
 
 const EnigmeModel = mongoose.model('Enigme', enigmeSchema, 'Enigme')
