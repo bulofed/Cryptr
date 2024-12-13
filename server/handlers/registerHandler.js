@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 export const handleSubmit = async (username, email, password) => {
     try {
-        const enigmaId = new mongoose.Types.ObjectId('674d8105775bbb403acafd06');
+        const enigmaId = new mongoose.Types.ObjectId('675c49d32a928827bb40be80');
 
         const response = await $fetch('/api/auth/register', {
             method: 'POST',
