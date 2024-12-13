@@ -16,6 +16,9 @@ const MAX_CHARS = 100;
 let interrupted = false;
 let availableEnigmas = [];
 
+let timer = 0;
+let timerInterval = null;
+
 const focusInput = () => {
   nextTick(() => {
     const inputElement = document.getElementById('terminal-input');
@@ -143,6 +146,7 @@ const commands = {
       }
 
       if (arg === enigma.solution) { 
+        clearInterval(timerInterval);
         terminalLines.value.push('Correct! You solved it! 🎉');
 
         if (user.value) {
@@ -152,6 +156,8 @@ const commands = {
             const enigmaIndex = userData.unlockedEnigmas.findIndex(e => e.title === enigma.title);
             if (enigmaIndex !== -1) { // passe l'etat de l'enigme à solved
               userData.unlockedEnigmas[enigmaIndex].state = 'solved';
+              userData.unlockedEnigmas[enigmaIndex].completionTime = timer;
+              userData.unlockedEnigmas[enigmaIndex].dateCompletion = new Date();
               await $fetch(`/api/utilisateurs/${user.value.username}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
@@ -239,6 +245,15 @@ const typeText = async (text) => {
 onMounted(() => {
   loadSession();
   typeText(displayText);
+  timerInterval = setInterval(() => {
+    timer += 1;
+  }, 1000);
+});
+
+onUnmounted(() => {
+  if (timerInterval){
+    clearInterval(timerInterval);
+  }
 });
 </script>
 

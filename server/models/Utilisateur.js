@@ -9,7 +9,9 @@ const utilisateurSchema = new mongoose.Schema({
       title: { type: String, required: true },
       difficultyLevel: { type: Number, required: true },
       numberOfTry: { type: Number, default: 0 },
-      state : { type: String},
+      state : { type: String },
+      completionTime: { type: Number, default: 0 },
+      dateCompletion: { type: Date }
     }
   ],
 
