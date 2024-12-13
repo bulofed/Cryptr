@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from 'vue-router';
 import { handleSubmit } from "../server/handlers/registerHandler";
 
 const formData = ref({
@@ -9,10 +10,11 @@ const formData = ref({
 });
 
 const rememberMe = ref(false);
+const router = useRouter();
 
-
-const onSubmit = () => {
+const onSubmit = async () => {
     handleSubmit(formData.value.username, formData.value.email, formData.value.password);
+    router.push('/');
 };
 </script>
 
