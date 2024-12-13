@@ -2,7 +2,7 @@
   <button
     @click="handleSwitchDarkMode"
     class="rounded-full p-2"
-    :class="isIndexRoute ? 'bg-transparent text-white ' : 'bg-zinc-300 dark:bg-zinc-800 text-zinc-800 dark:text-white'"
+    :class="isIndexRoute ? 'bg-transparent text-white ' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-white'"
   >
     <IconSun v-if="!darkMode" class="size-6" />
     <IconMoon v-else class="size-6" />
