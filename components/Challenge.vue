@@ -52,8 +52,8 @@ const sortedEnigmes = computed(() => {
 </script>
 
 <template>
-<div class="challenges-section text-center p-8 bg-gray-100">
-  <h1 class="text-3xl font-bold mb-10">Challenges</h1>
+<div class="challenges-section text-center p-8">
+  <h1 class="text-7xl font-bold mb-10">Challenges</h1>
 
   <!-- États -->
   <div v-if="loading" class="text-center p-4">
@@ -70,7 +70,7 @@ const sortedEnigmes = computed(() => {
   <div class="challenges-grid grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <div v-for="enigme in sortedEnigmes" 
         :key="enigme._id" 
-        class="challenge-card border border-bl rounded-lg p-4 bg-white shadow-md relative min-h-[240px] transition-all duration-300"
+        class="challenge-card border border-bl rounded-lg px-12 py-16 bg-zinc-100 dark:bg-zinc-800 shadow-md relative min-h-[240px] transition-all duration-300"
         :class="{
           'hover:shadow-[4px_4px_0_0_rgba(34,197,94,0.6)]': enigme.difficultyLevel === 0,
           'hover:shadow-[4px_4px_0_0_rgba(234,179,8,0.6)]': enigme.difficultyLevel === 1,
@@ -81,23 +81,23 @@ const sortedEnigmes = computed(() => {
         >
 
       <!-- Titre et Description -->
-      <h2 class="text-2xl font-semibold">{{ enigme.title }}</h2>
+      <h2 class="text-4xl font-semibold">{{ enigme.title }}</h2>
       <p class="text-gray-500 mt-6 text-lg">{{ enigme.description }}</p>
 
       <!-- Statistiques -->
       <div class="stats flex justify-between mt-4 text-sm">
-        <span class="text-center text-xl mt-6">
-          {{ enigme.statistics.successRate }}%<br>
-          <small class="text-gray-500">Taux de réussite</small>
-        </span>
-        <span class="text-center text-xl mt-6">
-          {{ enigme.statistics.tries }}<br>
-          <small class="text-gray-500">Tentatives</small>
-        </span>
-        <span class="text-center text-xl mt-6">
-          {{ enigme.statistics.averageResolutionTime }}s<br>
-          <small class="text-gray-500">Temps estimé</small>
-        </span>
+        <div class="flex flex-col justify-center">
+          <p class="text-5xl font-bold">{{ enigme.statistics.successRate }}%</p>
+          <p class="text-gray-500">Taux de réussite</p>
+        </div>
+        <div class="flex flex-col justify-center">
+          <p class="text-5xl font-bold">{{ enigme.statistics.tries }}%</p>
+          <p class="text-gray-500">Tentatives</p>
+        </div>
+        <div class="flex flex-col justify-center">
+          <p class="text-5xl font-bold">{{ enigme.statistics.averageResolutionTime }}%</p>
+          <p class="text-gray-500">Temps estimé</p>
+        </div>
       </div>
 
       <!-- Badge de difficulté -->
