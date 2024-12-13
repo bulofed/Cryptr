@@ -26,11 +26,11 @@ const isIndexRoute = computed(() => route.path === '/')
     <NuxtLink to="/">
       <IconLogo class="size-12 dark:fill-white"/>
     </NuxtLink>
-    <nav class="flex space-x-8 items-center text-base font-sans">
-      <NuxtLink to="/dashboard"><b>Dashboard</b></NuxtLink>
-      <NuxtLink to="/challenge"><b>Challenge</b></NuxtLink>
-      <NuxtLink to="/classement"><b>Classement</b></NuxtLink>
-      <NuxtLink to="/connexion" v-if="!user"><b>Connexion</b></NuxtLink>
+    <nav class="flex space-x-8 items-center text-base font-sans font-bold">
+      <NuxtLink to="/dashboard">Dashboard</NuxtLink>
+      <NuxtLink to="/challenge">Challenge</NuxtLink>
+      <NuxtLink to="/classement">Classement</NuxtLink>
+      <NuxtLink to="/connexion" v-if="!user">Connexion</NuxtLink>
       <button @click="logout" v-else>Déconnexion</button>
       <ThemeSwitch />
     </nav>
