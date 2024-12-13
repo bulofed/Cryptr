@@ -28,12 +28,13 @@ const isSpecialRoute = computed(() => route.path === '/challenge' || route.path 
     <NuxtLink to="/">
       <IconLogo class="size-12"/>
     </NuxtLink>
-    <nav class="flex space-x-8 text-base font-sans">
+    <nav class="flex space-x-8 items-center text-base font-sans">
       <NuxtLink to="/dashboard"><b>Dashboard</b></NuxtLink>
       <NuxtLink to="/challenge"><b>Challenge</b></NuxtLink>
       <NuxtLink to="/classement"><b>Classement</b></NuxtLink>
       <NuxtLink to="/connexion" v-if="!user"><b>Connexion</b></NuxtLink>
       <button @click="logout" v-else>Déconnexion</button>
+      <ThemeSwitch />
     </nav>
   </div>
 </template>

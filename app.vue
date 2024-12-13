@@ -8,10 +8,16 @@ const hideLayoutRoutes = ['/inscription', '/connexion']
 const shouldHideLayout = computed(() => {
   return hideLayoutRoutes.includes(route.path) || route.path.startsWith('/enigme')
 })
+
+if (import.meta.client) {
+  localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ? document.documentElement.classList.add('dark')
+    : document.documentElement.classList.remove('dark');
+}
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col dark:bg-zinc-950 dark:text-white">
     <Header v-if="!shouldHideLayout" />
 
     <NuxtPage class="flex-1"/>

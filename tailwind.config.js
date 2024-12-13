@@ -3,7 +3,8 @@ export default {
   theme: {
     fontFamily: {
       sans: ['Barlow', 'sans-serif'],
-      code: ['Fira Code', 'monospace']
+      code: ['Fira Code', 'monospace'],
+      title: ['Space Grotesk', 'sans-serif']
     },
     extend: {
       backgroundImage: {
@@ -11,5 +12,6 @@ export default {
       },
     }
   },
-  plugins: []
+  plugins: [],
+  darkMode: 'class'
 }

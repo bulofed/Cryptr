@@ -16,9 +16,9 @@ provide('isSessionLoaded', isSessionLoaded)
 
 <template>
   <div v-if="isSessionLoaded">
-    <HeroSection />
-    <Carousel />
-    <ProjectInfo />
+    <IndexHeroSection />
+    <IndexCarousel />
+    <IndexProjectInfo />
   </div>
   <div v-else>
     Loading...
