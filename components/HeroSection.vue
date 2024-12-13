@@ -22,15 +22,15 @@ const handleStartChallenge = () => {
 
     <div class="flex justify-center gap-20 text-white z-10 text-center">
       <div>
-        <p class="text-9xl font-bold">16</p>
+        <p class="text-9xl font-bold">1</p>
         <p class="text-4xl">Équipes actives</p>
       </div>
       <div>
-        <p class="text-9xl font-bold">120</p>
+        <p class="text-9xl font-bold">1</p>
         <p class="text-4xl">Cryptanalyses complétées</p>
       </div>
       <div>
-        <p class="text-9xl font-bold">32</p>
+        <p class="text-9xl font-bold">2</p>
         <p class="text-4xl">Défis disponibles</p>
       </div>
     </div>
