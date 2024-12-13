@@ -150,7 +150,6 @@ const commands = {
         terminalLines.value.push('Correct! You solved it! 🎉');
 
         if (user.value) {
-
           const userData = await fetchUser(user.value.username);
           if (userData && userData.unlockedEnigmas) {
             const enigmaIndex = userData.unlockedEnigmas.findIndex(e => e.title === enigma.title);
@@ -166,22 +165,26 @@ const commands = {
                 })
               });
             }
-            if (enigma.unlockedEnigma !== -1)  { // débloque les potentielles enigmes suivantes
-              const newEnigma = await fetchEnigmaByName(enigma.unlockedEnigma);
-              if (newEnigma) {
-                userData.unlockedEnigmas.push({
-                  title: newEnigma.title,
-                  state: 'available',
-                  difficultyLevel: newEnigma.difficultyLevel //peut pas marcher newenigma ne contient pas niveauDifficulte
-                });
-                await $fetch(`/api/utilisateurs/${user.value.username}`, {
-                  method: 'PATCH',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(userData)
-                });
+            if (Array.isArray(enigma.unlocksEnigmas) && enigma.unlocksEnigmas.length > 0) { // débloque les potentielles enigmes suivantes
+              for (const enigmaId of enigma.unlocksEnigmas) {
+                const newEnigma = await fetchEnigmaByName(enigmaId);
+                if (newEnigma) {
+                  const isAlreadyUnlocked = userData.unlockedEnigmas.some(e => e.title === newEnigma.title);
+                  if (!isAlreadyUnlocked) {
+                    userData.unlockedEnigmas.push({
+                      title: newEnigma.title,
+                      state: 'available',
+                      difficultyLevel: newEnigma.difficultyLevel
+                    });
+                  }
+                }
               }
+              await $fetch(`/api/utilisateurs/${user.value.username}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData)
+              });
             }
-            
           }
         }
       } else {
