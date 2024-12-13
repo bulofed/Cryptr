@@ -10,7 +10,6 @@ export const useEnigma = () => {
         return null;
       }
       const response = await $fetch(`/api/enigmes/${id}`);
-      console.log(response);
       if (response.success && response.data) {
         return response.data;
       }

@@ -72,7 +72,6 @@ const commands = {
       if (user.value) {
         const userData = await fetchUser(user.value.username);
         if (userData && userData.unlockedEnigmas) {
-          console.log("User data unlockedEnigmas",userData.unlockedEnigmas);
           availableEnigmas = userData.unlockedEnigmas.filter(enigma => enigma.state.toLowerCase() === 'available');
           if (availableEnigmas.length > 0) {
             availableEnigmas.forEach((enigma, index) => {
