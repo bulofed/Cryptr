@@ -1,8 +1,6 @@
 <template>
   <div class="bg-neutral-800 w-min-screen flex flex-col px-16">
-    <div
-      class="flex items-center justify-between py-8 border-b-2 border-purple-500"
-    >
+    <div class="flex items-center justify-between py-8 border-b-2 border-purple-500">
       <p class="text-3xl font-semibold  text-white">
         Rejoignez nous !
       </p>
