@@ -14,7 +14,16 @@ const terminalLines = ref([]);
 const displayText = "Hello, this is a simulated terminal. Type /help for commands.";
 const MAX_CHARS = 100;
 let interrupted = false;
-let availableEnigmas = []; 
+let availableEnigmas = [];
+
+const focusInput = () => {
+  nextTick(() => {
+    const inputElement = document.getElementById('terminal-input');
+    if (inputElement) {
+      inputElement.focus();
+    }
+  });
+};
 
 const fetchUser = async (username) => {
   try {
@@ -234,42 +243,25 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex justify-center mb-12">
-    <div class="bg-slate-950 border p-4 rounded w-screen mx-16 h-52 font-code text-xl relative" id="terminal">
-      <div class="terminal-content h-full overflow-y-auto">
-        <p v-for="line in terminalLines" :key="line" class="text-slate-50">> {{ line }}</p>
-        <p class="text-slate-50">> {{ terminalInput }}<span class="blinking-cursor">_</span></p>
-      </div>
-      <input 
-        v-model="terminalInput"
-        @keydown.enter="handleEnter" 
-        class="absolute bottom-0 left-0 w-full h-full opacity-0 cursor-default"
-        :maxlength="MAX_CHARS"
-        autofocus
-      />
+  <div class="bg-slate-950 border p-4 rounded mx-16 h-52 font-code text-xl relative flex flex-col justify-end">
+    <div
+      class="grow overflow-y-auto terminal-content z-10"
+      @click="focusInput"
+    >
+      <p v-for="line in terminalLines" :key="line" class="text-slate-50">> {{ line }}</p>
+      <p class="text-slate-50">> {{ terminalInput }}<span class="blinking-cursor">_</span></p>
     </div>
+    <input 
+      v-model="terminalInput"
+      @keydown.enter="handleEnter"
+      class="absolute bottom-0 left-0 w-full h-full opacity-0"
+      :maxlength="MAX_CHARS"
+      id="terminal-input"
+    />
   </div>
 </template>
 
 <style scoped>
-.terminal-content {
-  scrollbar-width: thin;
-  scrollbar-color: #4B5563 transparent;
-}
-
-.terminal-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.terminal-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.terminal-content::-webkit-scrollbar-thumb {
-  background-color: #4B5563;
-  border-radius: 4px;
-}
-
 .blinking-cursor {
   animation: blink 1s step-end infinite;
 }
