@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@formkit/nuxt": "^1.6.9",
+    "@heroicons/vue": "^2.2.0",
     "@nuxt/fonts": "^0.10.2",
     "@nuxt/icon": "^1.8.2",
     "@nuxt/image": "^1.8.1",
