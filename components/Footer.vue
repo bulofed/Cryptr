@@ -5,8 +5,8 @@
         Rejoignez nous !
       </p>
       <div class="flex space-x-6 [&>*]:size-8">
-        <IconGithub class="fill-white"/>
-        <IconMail class="fill-white" />
+        <IconGithub />
+        <IconMail />
       </div>
     </div>
     <div class="flex justify-between py-4 text-xs">
