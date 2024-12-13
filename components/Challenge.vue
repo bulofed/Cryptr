@@ -21,15 +21,10 @@ const fetchEnigmes = async () => {
       const userData = await fetchUser(user.value.username);
       
       if (userData && userData.unlockedEnigmas) {
-        enigmes.value = allEnigmas.map(enigma => ({
-          ...enigma,
-          isUnlocked: userData.unlockedEnigmas.some(unlocked => unlocked.title === enigma.title)
-        }));
+        const unlockedTitles = userData.unlockedEnigmas.map(unlocked => unlocked.title);
+        enigmes.value = allEnigmas.filter(enigma => unlockedTitles.includes(enigma.title));
       } else {
-        enigmes.value = allEnigmas.map(enigma => ({
-          ...enigma,
-          isUnlocked: false
-        }));
+        enigmes.value = [];
       }
     } else {
       error.value = 'Erreur de chargement';
