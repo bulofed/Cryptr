@@ -21,12 +21,15 @@ const isIndexRoute = computed(() => route.path === '/')
   <div
     class="flex items-center justify-between px-16 py-3 z-20 w-full"
     :class="
-      isIndexRoute ? 'absolute top-0' : 'relative'
+      isIndexRoute ? 'absolute top-0 fill-white' : 'relative'
     ">
     <NuxtLink to="/">
       <IconLogo class="size-12 dark:fill-white"/>
     </NuxtLink>
-    <nav class="flex space-x-8 items-center text-base font-sans font-bold">
+    <nav
+      class="flex space-x-8 items-center text-base font-sans font-bold"
+      :class="{ 'text-white': isIndexRoute }"
+    >
       <NuxtLink to="/dashboard">Dashboard</NuxtLink>
       <NuxtLink to="/challenge">Challenge</NuxtLink>
       <NuxtLink to="/classement">Classement</NuxtLink>
