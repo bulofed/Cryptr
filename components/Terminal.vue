@@ -1,12 +1,11 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { useSession } from '~/composable/useSession';
-import { useEnigma } from '~/composable/useEnigma';
-//import EnigmeModel from '~/server/models/Enigme';
-
+import { useEnigma, useUnlockedEnigmas } from '~/composable/useEnigma';
 
 const { user, loadSession } = useSession();
 const { fetchCurrentEnigma } = useEnigma();
+const { enigmes, fetchUnlockedEnigmas } = useUnlockedEnigmas();
 
 const router = useRouter();
 const terminalInput = ref('');
@@ -14,7 +13,6 @@ const terminalLines = ref([]);
 const displayText = "Hello, this is a simulated terminal. Type /help for commands.";
 const MAX_CHARS = 100;
 let interrupted = false;
-let availableEnigmas = [];
 
 let timer = 0;
 let timerInterval = null;
@@ -73,55 +71,6 @@ const commands = {
       const enigma = await fetchCurrentEnigma();
       if (enigma && enigma.description) {
         typeText(enigma.description);
-      } else {
-        terminalLines.value.push('No dialog found.');
-      }
-    }
-  },
-  '/available': {
-    description: 'Show available enigmas for the current user',
-    action: async () => {
-      if (user.value) {
-        const userData = await fetchUser(user.value.username);
-        if (userData && userData.unlockedEnigmas) {
-          availableEnigmas = userData.unlockedEnigmas.filter(enigma => enigma.state.toLowerCase() === 'available');
-          if (availableEnigmas.length > 0) {
-            availableEnigmas.forEach((enigma, index) => {
-              terminalLines.value.push(`${index + 1} - ${enigma.title}, Difficulty: ${enigma.difficultyLevel}`);
-            });
-          } else {
-            terminalLines.value.push('No available enigmas found.');
-          }
-        } else {
-          terminalLines.value.push('No enigmas found for the user.');
-        }
-      } else {
-        terminalLines.value.push('No user is currently logged in.');
-      }
-    }
-  },
-  '/go_to': {
-    description: 'Go to the enigma with the specified name or index',
-    action: async (arg) => {
-      let enigmaName = arg;
-      const index = parseInt(arg, 10);
-      if (!isNaN(index) && index > 0 && index <= availableEnigmas.length) {
-        enigmaName = availableEnigmas[index - 1].title;
-      }
-      const enigma = await fetchEnigmaByName(enigmaName);
-      if (enigma && enigma._id) {
-        router.push(`/enigme/${enigma._id}`);
-      } else {
-        terminalLines.value.push('Enigma not found.');
-      }
-    }
-  },
-  '/inspect': {
-    description: 'Inspect the current enigma',
-    action: async () => {
-      const enigma = await fetchCurrentEnigma();
-      if (enigma) {
-        terminalLines.value.push(`${enigma.textInspect}`);
       } else {
         terminalLines.value.push('No enigma found.');
       }
@@ -189,6 +138,34 @@ const commands = {
         }
       } else {
         terminalLines.value.push('Wrong solution. Try again!');
+      }
+    }
+  },
+  '/go_to': {
+    description: 'Go to the enigma with the specified name or index',
+    action: async (arg) => {
+      let enigmaName = arg;
+      await fetchUnlockedEnigmas(user);
+      const index = parseInt(arg, 10);
+      if (!isNaN(index) && index > 0 && index <= enigmes.value.length) {
+        enigmaName = enigmes.value[index - 1].title;
+      }
+      const enigma = await fetchEnigmaByName(enigmaName);
+      if (enigma && enigma._id) {
+        router.push(`/enigme/${enigma._id}`);
+      } else {
+        terminalLines.value.push('Enigma not found.');
+      }
+    }
+  },
+  '/inspect': {
+    description: 'Inspect the current enigma',
+    action: async () => {
+      const enigma = await fetchCurrentEnigma();
+      if (enigma) {
+        terminalLines.value.push(`${enigma.textInspect}`);
+      } else {
+        terminalLines.value.push('No enigma found.');
       }
     }
   }
