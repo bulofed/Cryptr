@@ -1,15 +1,12 @@
 <script setup>
-import { ref } from 'vue';
-import { useEnigma } from '~/composable/useEnigma';
+import { ref, onMounted } from 'vue';
+import { useEnigma, useUnlockedEnigmas } from '~/composable/useEnigma';
+import { useSession } from '~/composable/useSession';
 
 const enigma = ref(null);
 const { fetchCurrentEnigma } = useEnigma();
-
-
-enigma.value = await fetchCurrentEnigma();
-if (enigma.value && enigma.value.imgPath) {
-  enigma.value.imgPath = enigma.value.imgPath.replace(/^public\//, '');
-}
+const { enigmes, fetchUnlockedEnigmas } = useUnlockedEnigmas();
+const { user, loadSession } = useSession();
 
 const isLeftPanelOpen = ref(false);
 const isRightPanelOpen = ref(false);
@@ -22,9 +19,17 @@ const toggleRightPanel = () => {
   isRightPanelOpen.value = !isRightPanelOpen.value;
 };
 
+onMounted(async () => {
+  loadSession();
+  enigma.value = await fetchCurrentEnigma();
+  if (enigma.value && enigma.value.imgPath) {
+    enigma.value.imgPath = enigma.value.imgPath.replace(/^public\//, '');
+  }
+  if (user.value) {
+    await fetchUnlockedEnigmas(user);
+  }
+});
 </script>
-
-
 
 <template>
   <NuxtLink to="/challenge" class="absolute top-8 left-8 cursor-pointer z-10">
@@ -87,7 +92,14 @@ const toggleRightPanel = () => {
         >
           ✖
         </button>
-        <p>Contenu du panneau droit</p>
+        <div>
+          <p>Liste des énigmes :</p>
+          <ul>
+            <li v-for="(enigme, index) in enigmes" :key="enigme._id">
+              {{ index + 1 }}- {{ enigme.title }}
+            </li>
+          </ul>
+        </div>
       </div>
     </transition>
 
