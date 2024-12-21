@@ -1,41 +1,13 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSession } from '~/composable/useSession';
-import { fetchUser } from '~/composable/useUser';
+import { useUnlockedEnigmas } from '~/composable/useEnigma';
 
-const enigmes = ref([]);
-const loading = ref(true);
-const error = ref(null);
-const router = useRouter();
 const { user, loadSession } = useSession();
+const { enigmes, loading, error, fetchUnlockedEnigmas } = useUnlockedEnigmas();
 
-const fetchEnigmes = async () => {
-  try {
-    loading.value = true;
-    const response = await $fetch('/api/enigmes');
-    
-    if (response.success) {
-      const allEnigmas = response.data;
-      
-      const userData = await fetchUser(user.value.username);
-      
-      if (userData && userData.unlockedEnigmas) {
-        const unlockedTitles = userData.unlockedEnigmas.map(unlocked => unlocked.title);
-        enigmes.value = allEnigmas.filter(enigma => unlockedTitles.includes(enigma.title));
-      } else {
-        enigmes.value = [];
-      }
-    } else {
-      error.value = 'Erreur de chargement';
-    }
-  } catch (error) {
-    console.error('Erreur:', error);
-    error.value = 'Erreur lors de la récupération des énigmes';
-  } finally {
-    loading.value = false;
-  }
-};
+const router = useRouter();
 
 const goToEnigma = (id) => {
   router.push(`/enigme/${id}`);
@@ -43,12 +15,12 @@ const goToEnigma = (id) => {
 
 onMounted(() => {
   loadSession();
-  fetchEnigmes();
+  fetchUnlockedEnigmas(user);
 });
 
 const sortedEnigmes = computed(() => {
   return [...enigmes.value].sort((a, b) => a.difficultyLevel - b.difficultyLevel)
-})
+});
 </script>
 
 <template>
@@ -67,7 +39,7 @@ const sortedEnigmes = computed(() => {
   </div>
 
   <!-- Grille d'énigmes -->
-  <div class="challenges-grid grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  <div v-else class="challenges-grid grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <div v-for="enigme in sortedEnigmes" 
         :key="enigme._id" 
         class="challenge-card border border-bl rounded-lg px-12 py-16 bg-zinc-100 dark:bg-zinc-800 shadow-md relative min-h-[240px] transition-all duration-300"
@@ -120,15 +92,9 @@ const sortedEnigmes = computed(() => {
 
 <style scoped>
 .challenge-card {
-  transition: transform 0.4s;
-}
-
-.challenge-card:hover {
-  transform: translateY(-15px);
   cursor: pointer;
 }
-
-.difficulty-tag {
-  font-size: 0.75rem;
+.challenge-card:hover {
+  background-color: #f0f0f0; 
 }
 </style>
