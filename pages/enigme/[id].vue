@@ -8,6 +8,8 @@ const { fetchCurrentEnigma } = useEnigma();
 const { enigmes, fetchUnlockedEnigmas } = useUnlockedEnigmas();
 const { user, loadSession } = useSession();
 
+const router = useRouter();
+
 const isLeftPanelOpen = ref(false);
 const isRightPanelOpen = ref(false);
 
@@ -19,6 +21,13 @@ const toggleRightPanel = () => {
   isRightPanelOpen.value = !isRightPanelOpen.value;
 };
 
+const closePanelsOnEscape = (event) => {
+  if (event.key === 'Escape') {
+    isLeftPanelOpen.value = false;
+    isRightPanelOpen.value = false;
+  }
+};
+
 onMounted(async () => {
   loadSession();
   enigma.value = await fetchCurrentEnigma();
@@ -28,7 +37,31 @@ onMounted(async () => {
   if (user.value) {
     await fetchUnlockedEnigmas(user);
   }
+
+  window.addEventListener('keydown', closePanelsOnEscape);
 });
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', closePanelsOnEscape);
+});
+
+const commands = [
+  { name: '/help', description: 'Show available commands'},
+  { name: '/desc', description: 'Show current enigma description'},
+  { name: '/clear',description: 'Clear Termnial'},
+  { name: '/try' , description: 'Try a solution for the current enigma'},
+  { name: '/go_to',description: 'Go to the enigma with the specified name or index'},
+  { name: '/inspect [content]',description:'Inspect the current enigma'}
+];
+
+const goToEnigma = (id) => {
+  router.push(`/enigme/${id}`);
+};
+
+const sortedEnigmes = computed(() => {
+  return [...enigmes.value].sort((a, b) => a.difficultyLevel - b.difficultyLevel)
+});
+
 </script>
 
 <template>
@@ -53,7 +86,7 @@ onMounted(async () => {
       @click="toggleLeftPanel"
       class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-700 hover:bg-gray-600 text-white h-12 w-12 flex items-center justify-center rounded-r-lg shadow-lg z-10"
     >
-      <IconChevronLeft class="size-6" />
+      <IconChevronRight class="size-6" />
     </button>
 
     <!-- Bouton droit -->
@@ -61,47 +94,48 @@ onMounted(async () => {
       @click="toggleRightPanel"
       class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-700 hover:bg-gray-600 text-white h-12 w-12 flex items-center justify-center rounded-l-lg shadow-lg z-10"
     >
-      <IconChevronRight class="size-6" />
+      <IconChevronLeft class="size-6" />
     </button>
 
     <!-- Panneau gauche -->
     <transition name="slide-left">
-      <div
-        v-if="isLeftPanelOpen"
-        class="absolute top-0 left-0 h-full w-64 bg-white shadow-md z-20 flex flex-col p-4"
-      >
+      <div v-if="isLeftPanelOpen" class="absolute top-0 left-0 h-full w-64 bg-gray-900 shadow-md z-20 flex flex-col p-4">
         <button
           @click="toggleLeftPanel"
-          class="self-end text-gray-700 hover:text-gray-900"
+          class="self-end text-gray-400 hover:text-gray-200"
         >
           ✖
         </button>
-        <p>Contenu du panneau gauche</p>
+        <p class="text-white p-2 text-lg">Liste des commandes du Terminal</p>
+        <br>
+        <ul class="text-white text-lg">
+          <li v-for="command in commands" :key="command.name">
+            <button><strong>{{ command.name }}</strong></button>: {{ command.description }}
+            <hr class="my-2 border-gray-700"/> <!-- Ligne horizontale entre les commandes -->
+          </li>
+        </ul>
       </div>
     </transition>
 
     <!-- Panneau droit -->
     <transition name="slide-right">
-      <div
-        v-if="isRightPanelOpen"
-        class="absolute top-0 right-0 h-full w-64 bg-white shadow-md z-20 flex flex-col p-4"
+    <div v-if="isRightPanelOpen" class="absolute top-0 right-0 h-full w-64 bg-gray-900 shadow-md z-20 flex flex-col p-4">
+      <button
+        @click="toggleRightPanel"
+        class="self-end text-gray-700 hover:text-gray-900"
       >
-        <button
-          @click="toggleRightPanel"
-          class="self-end text-gray-700 hover:text-gray-900"
-        >
-          ✖
-        </button>
-        <div>
-          <p>Liste des énigmes :</p>
-          <ul>
-            <li v-for="(enigme, index) in enigmes" :key="enigme._id">
-              {{ index + 1 }}- {{ enigme.title }}
-            </li>
-          </ul>
-        </div>
+        ✖
+      </button>
+      <div class="text-white">
+        <p>Liste des énigmes :</p>
+        <ul>
+          <li v-for= "enigme in sortedEnigmes" in  :key="enigme._id" @click="goToEnigma(enigme._id)">
+            {{ index + 1 }}- <button>{{ enigme.title }}</button>  
+          </li>
+        </ul>
       </div>
-    </transition>
+    </div>
+  </transition>
 
   </div>
 </template>
