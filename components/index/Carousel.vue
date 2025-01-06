@@ -2,13 +2,13 @@
   <div class="relative w-full overflow-hidden h-140">
     <div class="flex transition-transform duration-500 ease-in-out">
       <div class="w-full flex-shrink-0">
-        <img src="@/public/Logo_Lock.jpg" alt="Slide 1" class="w-full h-96 object-cover">
+        <img src="@/public/standard.gif" alt="Slide 1" class="w-full h-96  object-cover">
       </div>
       <div class="w-full flex-shrink-0">
-        <img src="@/public/background_index.jpg" alt="Slide 2" class="w-full h-96 object-cover">
+        <img src="@/public/moyen.gif" alt="Slide 2" class="w-full h-96 object-cover">
       </div>
       <div class="w-full flex-shrink-0">
-        <img src="@/public/hard.png" alt="Slide 3" class="w-full h-96 object-cover">
+        <img src="@/public/difficile.gif" alt="Slide 3" class="w-full h-96 object-cover">
       </div>
     </div>
 

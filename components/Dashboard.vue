@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-100 text-white font-sans min-h-screen flex flex-col">
+    <div class="text-white font-sans min-h-screen flex flex-col">
       <div class="p-6 flex-1 max-w-6xl mx-auto">
         <!-- Stats Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
