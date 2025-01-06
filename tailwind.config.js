@@ -3,7 +3,6 @@ export default {
   theme: {
     fontFamily: {
       code: ['Fira Code', 'monospace'],
-      title: ['Space Grotesk', 'sans-serif']
     },
     extend: {
       backgroundImage: {

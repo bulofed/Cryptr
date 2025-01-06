@@ -1,7 +1,7 @@
 <template>
-  <h1 class="text-8xl font-title text-center font-extrabold pt-10">Comment ça marche ?</h1>
+  <h1 class="text-6xl tracking-tight text-center font-extrabold pt-10 text-zinc-900 dark:text-white">Comment ça marche ?</h1>
 
-  <div class="flex flex-col gap-16 px-20 pt-16 pb-20 dark:text-white text-2xl">
+  <div class="flex flex-col gap-16 max-w-5xl mx-auto pt-16 pb-20 dark:text-white text-lg">
     <div class="neon !border-gray-200 dark:shadow-blue-500 rounded-lg px-6 py-12">
       <p>
         Le but du projet est de créer une plateforme web dédiée à la résolution 
