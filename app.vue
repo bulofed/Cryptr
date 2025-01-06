@@ -17,7 +17,7 @@ if (import.meta.client) {
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col dark:bg-zinc-950 dark:text-white">
+  <div class="min-h-screen flex flex-col bg-white text-zinc-700 dark:bg-zinc-950 dark:text-white">
     <Header v-if="!shouldHideLayout" />
 
     <NuxtPage class="flex-1"/>

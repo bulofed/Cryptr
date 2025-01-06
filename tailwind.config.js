@@ -2,7 +2,6 @@ export default {
   content: [],
   theme: {
     fontFamily: {
-      sans: ['Barlow', 'sans-serif'],
       code: ['Fira Code', 'monospace'],
       title: ['Space Grotesk', 'sans-serif']
     },

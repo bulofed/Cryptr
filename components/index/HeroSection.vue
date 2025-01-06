@@ -14,13 +14,26 @@ const handleStartChallenge = () => {
 }
 </script>
 
+<style scoped>
+.bg-elm-1 {
+  background: rgb(212,255,209);
+  background: radial-gradient(circle, rgba(212,255,209,0.5) 0%, rgba(0,212,255,0) 75%); 
+}
+.bg-elm-2 {
+  background: rgb(209,237,255);
+  background: radial-gradient(circle, rgba(209,237,255,0.5) 0%, rgba(0,212,255,0) 75%); 
+}
+</style>
+
 <template>
-  <div class="flex flex-col justify-between h-screen w-min-screen bg-hero py-40">
-    <h1 class="flex text-white text-center font-bold px-40 text-5xl">
-      Déchiffrez l'impossible,<br>Rejoignez l'élite 🚀
+  <div class="max-w-5xl mx-auto pt-20">
+    <div class="bg-radial from-green-200/40 to-white to-75% absolute top-10 right-10 size-[32rem]"/>
+    <div class="bg-elm-2 absolute top-20 right-64 size-[42rem]"/>
+    <h1 class="flex text-center font-extrabold tracking-tight text-6xl text-zinc-900 dark:text-white">
+      Serez-vous capable de résoudre les énigmes ?
     </h1>
 
-    <div class="flex justify-center gap-20 text-white font-code text-center">
+    <div class="flex justify-center gap-20 font-code text-center pt-20">
       <div>
         <p class="text-9xl font-bold">1</p>
         <p class="text-4xl">Équipes actives</p>
@@ -35,21 +48,12 @@ const handleStartChallenge = () => {
       </div>
     </div>
 
-    <div class="flex justify-center">
-      <button
+    <div class="flex justify-center pt-20">
+      <a
         @click="handleStartChallenge"
-        class="py-6 px-12 rounded-full text-white font-bold bg-cyan-600 hover:bg-cyan-700 text-2xl flex transition">
+        class="py-4 px-6 rounded-lg bg-zinc-900 hover:bg-zinc-700 dark:bg-sky-500 dark:hover:bg-sky-400 flex transition text-white font-semibold cursor-pointer">
         Commencer le challenge
-      </button>
+      </a>
     </div>
   </div>
 </template>
-
-<style scoped>
-.bg-hero {
-  background-image: url('/background_index.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-</style>

@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/image'
   ],
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   runtimeConfig: {
     mongodbUri: process.env.MONGODB_URI,
     mongodbName: process.env.MONGODB_NAME,
