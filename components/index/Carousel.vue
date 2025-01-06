@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full overflow-hidden h-140 pt-20">
+  <div class="relative w-full overflow-hidden h-140 pt-32">
     <div class="flex transition-transform duration-500 ease-in-out">
       <div class="w-full flex-shrink-0">
         <img src="@/public/standard.gif" alt="Slide 1" class="w-full h-96  object-cover">

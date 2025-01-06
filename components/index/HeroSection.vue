@@ -28,9 +28,9 @@ const handleStartChallenge = () => {
 
 <template>
   <div class="max-w-5xl mx-auto pt-20 relative">
-    <div class="absolute left-[40rem] -bottom-32 size-[50rem] radial-1 opacity-40 dark:opacity-20"/>
-    <div class="absolute right-[20rem] top-12 size-[65rem] radial-2 opacity-40 dark:opacity-20"/>
-    <div class="absolute left-48 bottom-32 size-[35rem] radial-3 opacity-40 dark:opacity-20"/>
+    <div class="absolute left-[40rem] -bottom-32 size-[50rem] radial-1 opacity-0 dark:opacity-20"/>
+    <div class="absolute right-[20rem] top-12 size-[65rem] radial-2 opacity-0 dark:opacity-20"/>
+    <div class="absolute left-48 bottom-32 size-[35rem] radial-3 opacity-0 dark:opacity-20"/>
     <div class="relative">
       <h1 class="flex text-center font-extrabold tracking-tight text-6xl text-zinc-900 dark:text-white">
         Serez-vous capable de résoudre les énigmes ?

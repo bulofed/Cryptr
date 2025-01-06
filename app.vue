@@ -2,7 +2,7 @@
 const route = useRoute()
 
 // Liste des routes où le header/footer ne doivent pas s'afficher
-const hideLayoutRoutes = ['/inscription', '/connexion']
+const hideLayoutRoutes = ['/inscription', '/connexion', '/login']
 
 // Vérifie si on doit cacher le layout
 const shouldHideLayout = computed(() => {
