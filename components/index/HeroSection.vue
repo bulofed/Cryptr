@@ -14,21 +14,8 @@ const handleStartChallenge = () => {
 }
 </script>
 
-<style scoped>
-.bg-elm-1 {
-  background: rgb(212,255,209);
-  background: radial-gradient(circle, rgba(212,255,209,0.5) 0%, rgba(0,212,255,0) 75%); 
-}
-.bg-elm-2 {
-  background: rgb(209,237,255);
-  background: radial-gradient(circle, rgba(209,237,255,0.5) 0%, rgba(0,212,255,0) 75%); 
-}
-</style>
-
 <template>
   <div class="max-w-5xl mx-auto pt-20">
-    <div class="bg-radial from-green-200/40 to-white to-75% absolute top-10 right-10 size-[32rem]"/>
-    <div class="bg-elm-2 absolute top-20 right-64 size-[42rem]"/>
     <h1 class="flex text-center font-extrabold tracking-tight text-6xl text-zinc-900 dark:text-white">
       Serez-vous capable de résoudre les énigmes ?
     </h1>

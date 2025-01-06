@@ -14,8 +14,8 @@
   "dependencies": {
     "@formkit/nuxt": "^1.6.9",
     "@heroicons/vue": "^2.2.0",
-    "@nuxt/fonts": "^0.10.2",
-    "@nuxt/icon": "^1.8.2",
+    "@nuxt/fonts": "^0.10.3",
+    "@nuxt/icon": "^1.10.3",
     "@nuxt/image": "^1.8.1",
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/tailwindcss": "^6.12.2",
@@ -24,18 +24,18 @@
     "@vueuse/nuxt": "^11.3.0",
     "bcrypt": "^5.1.1",
     "js-cookie": "^3.0.5",
-    "mongoose": "^8.8.2",
-    "nuxt": "^3.14.1592",
+    "mongoose": "^8.9.3",
+    "nuxt": "^3.15.1",
     "vue": "latest",
     "vue-router": "latest"
   },
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
   "devDependencies": {
-    "@nuxt/test-utils": "^3.14.4",
+    "@nuxt/test-utils": "^3.15.1",
     "@vue/test-utils": "^2.4.6",
-    "happy-dom": "^15.11.6",
-    "playwright-core": "^1.49.0",
+    "happy-dom": "^15.11.7",
+    "playwright-core": "^1.49.1",
     "standardx": "^7.0.0",
-    "vitest": "^2.1.5"
+    "vitest": "^2.1.8"
   }
 }
