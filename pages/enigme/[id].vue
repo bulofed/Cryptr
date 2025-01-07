@@ -129,7 +129,7 @@ const sortedEnigmes = computed(() => {
       <div class="text-white">
         <p>Liste des énigmes :</p>
         <ul>
-          <li v-for= "enigme in sortedEnigmes" in  :key="enigme._id" @click="goToEnigma(enigme._id)">
+          <li v-for= "(enigme, index ) in sortedEnigmes" in  :key="enigme._id" @click="goToEnigma(enigme._id)">
             {{ index + 1 }}- <button>{{ enigme.title }}</button>  
           </li>
         </ul>
