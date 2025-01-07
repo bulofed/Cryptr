@@ -7,15 +7,27 @@ import { handleSubmit } from "../server/handlers/registerHandler";
 const formData = ref({
     username: '',
     email: '',
-    password: ''
+    password: '',
+    recaptchaResponse: null
 });
 
 const rememberMe = ref(false);
 const router = useRouter();
 
+const siteKey = useRuntimeConfig().public.recaptchaSiteKey;
+const onCaptchaVerified = (response) => {
+    formData.value.recaptchaResponse = response;
+    console.log('ReCaptcha vérifié:', response);
+};
+
 const onSubmit = async () => {
+    if (!formData.value.recaptchaResponse){
+          alert('Veuillez valider le captcha!');
+          return;
+    }
+
     try {
-        const user = await handleSubmit(formData.value.username, formData.value.email, formData.value.password);
+        const user = await handleSubmit(formData.value.username, formData.value.email, formData.value.password, formData.value.recaptchaResponse);
         Cookies.set('session', JSON.stringify(user), { expires: rememberMe.value ? 7 : null });
         router.push('/');
     } catch (err) {
@@ -117,6 +129,8 @@ const onSubmit = async () => {
             </div>
 
           </div>
+
+          <vue-recaptcha :sitekey="siteKey" @verify="onCaptchaVerified"></vue-recaptcha>
 
           <!-- Bouton de connexion -->
           <button

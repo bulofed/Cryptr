@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const handleSubmit = async (username, email, password) => {
+export const handleSubmit = async (username, email, password, recaptchaResponse) => {
     try {
         const enigmaId = new mongoose.Types.ObjectId('675c49d32a928827bb40be80');
 
@@ -10,7 +10,8 @@ export const handleSubmit = async (username, email, password) => {
                 username,
                 email,
                 password,
-                enigmaId
+                enigmaId,
+                recaptchaResponse
             },
         });
 

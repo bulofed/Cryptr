@@ -3,7 +3,7 @@ const isEmail = (str) => {
     return emailRegex.test(str);
   };
   
-  export const handleLogin = async (emailOrUsername, password) => {
+  export const handleLogin = async (emailOrUsername, password, recaptchaResponse) => {
     const trimmedInput = emailOrUsername.trim();
     const isEmailAddress = isEmail(emailOrUsername);
   
@@ -14,6 +14,7 @@ const isEmail = (str) => {
           identifier: trimmedInput,
           password,
           isEmail: isEmailAddress,
+          recaptchaResponse,
         },
       });
   

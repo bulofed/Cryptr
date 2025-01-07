@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Cookies from 'js-cookie';
 import { handleLogin } from "../server/handlers/loginHandler";
+import { VueRecaptcha } from 'vue-recaptcha';
 
 const router = useRouter();
 
@@ -11,9 +12,21 @@ const rememberMe = ref(false);
 const emailOrUsername = ref('');
 const password = ref('');
 
-const onSubmit = async () => {
+const siteKey = useRuntimeConfig().public.recaptchaSiteKey;
+const recaptchaResponse = ref(null);
 
-  const response = await handleLogin(emailOrUsername.value, password.value);
+const onCaptchaVerified = (response) => {
+  recaptchaResponse.value = response;
+  console.log('ReCaptcha vérifié:', response);
+};
+
+const onSubmit = async () => {
+  if (!recaptchaResponse.value) {
+    alert('Veuillez valider le captcha!');
+    return;
+  }
+
+  const response = await handleLogin(emailOrUsername.value, password.value, recaptchaResponse.value);
 
   if (response.status === 200) {
     Cookies.set('session', JSON.stringify(response.user), { expires: rememberMe.value ? 7 : null });
@@ -111,6 +124,8 @@ const onSubmit = async () => {
               <b>Mot de passe oublié ?</b>
             </a>
           </div>
+
+          <vue-recaptcha :sitekey="siteKey" @verify="onCaptchaVerified"></vue-recaptcha>
 
           <!-- Bouton de connexion -->
           <button

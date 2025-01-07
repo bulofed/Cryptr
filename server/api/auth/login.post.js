@@ -3,7 +3,38 @@ import UtilisateurModel from '~/server/models/Utilisateur';
 import bcrypt from 'bcrypt';
 
 export default defineEventHandler(async (event) => {
-  const { identifier, password, isEmail } = await readBody(event);
+  const { identifier, password, isEmail, recaptchaResponse } = await readBody(event);
+  const config = useRuntimeConfig();
+
+  try {
+    const recaptchaVerificationResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        secret: config.recaptchaSecret,
+        response: recaptchaResponse,
+      }),
+    });
+
+    const recaptchaData = await recaptchaVerificationResponse.json();
+
+    if (!recaptchaData.success){
+      return {
+        status: 400,
+        success: false,
+        message: 'Échec de la validation ReCaptcha.',
+      };
+    }
+  } catch(err){
+    console.error('Erreur lors de la validation du captcha:', err);
+    return {
+      status: 500,
+      success: false,
+      message: 'Erreur interne lors de la validation du captcha.',
+    };
+  }
 
   try {
     const user = await UtilisateurModel.findOne(

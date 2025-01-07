@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 export default defineEventHandler(async (event) => {
     try {
         const body = await readBody(event);
-        console.log("Body : " , body);
         if (!body || !body.username || !body.email || !body.password) {
             return {
                 status: 400,
@@ -20,6 +19,27 @@ export default defineEventHandler(async (event) => {
                 status: 400,
                 success: false,
                 message: "Le format de l'adresse email est invalide."
+            };
+        }
+
+        const config = useRuntimeConfig();
+        const recaptchaVerificationResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                secret: config.recaptchaSecret,
+                response: body.recaptchaResponse,
+            }),
+        });
+
+        const recaptchaData = await recaptchaVerificationResponse.json();
+        if (!recaptchaData.success) {
+            return {
+                status: 400,
+                success: false,
+                message: 'Échec de la validation ReCaptcha.',
             };
         }
 
