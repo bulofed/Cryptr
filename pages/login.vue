@@ -1,38 +1,55 @@
 <template>
   <Form>
     <h1 class="font-bold text-3xl text-center mb-5">Connexion</h1>
-    <form>
-      <div class="mb-4">
-        <label class="block text-sm font-bold text-gray-700 mb-1">
-          Email ou nom d'utilisateur
-        </label>
-        <input type="text" required placeholder="Entrez votre mail ou nom d'utilisateur"
-          class="text-black w-full p-3 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-blue-600"
-        />
-      </div>
-      <div class="mb-4">
-        <label class="block text-sm font-bold text-gray-700 mb-1">
-          Mot de passe
-        </label>
-        <input type="password" required placeholder="Entrez votre mot de passe"
-         class="text-black w-full p-3 border border-gray-300 rounded-md text-xs focus:outline-none focus:ring-2 focus:ring-blue-600"
-        />
-      </div>
+    <form @submit.prevent="onSubmit">
+      <InputField
+        id="usernameOrEmail"
+        label="Email ou nom d'utilisateur"
+        type="text"
+        placeholder="Entrez votre mail ou nom d'utilisateur"
+      />
+      <InputField
+        id="password"
+        label="Mot de passe"
+        type="password"
+        placeholder="Entrez votre mot de passe"
+      />
       <button type="submit" class="bg-black text-white w-full mb-5 py-2.5 rounded-md hover:bg-zinc-700 cursor-pointer">
         Connexion
       </button>
       <div class="flex justify-between">
-        <a href="#" class="text-blue-600 hover:underline">Mot de passe oublié ?</a>
-        <a href="#" class="text-blue-600 hover:underline">Créer un compte</a>
+        <FormLink href="/mot-de-passe-oublie" text="Mot de passe oublié ?" />
+        <FormLink href="/register" text="Créer un compte" />
       </div>
     </form>
   </Form>
 </template>
 
-<script lang="ts" setup>
+<script setup>
+import { useRouter } from 'vue-router';
+import Cookies from 'js-cookie';
+import { handleLogin } from "../server/handlers/loginHandler";
 
+const router = useRouter();
+
+const rememberMe = ref(false);
+
+const emailOrUsername = ref('');
+const password = ref('');
+
+const onSubmit = async () => {
+
+  const response = await handleLogin(emailOrUsername.value, password.value);
+
+  if (response.status === 200) {
+    Cookies.set('session', JSON.stringify(response.user), { expires: rememberMe.value ? 7 : null });
+
+    // Rediriger l'utilisateur vers la page d'accueil ou une autre page
+    router.push('/');
+  } else {
+    // Afficher un message d'erreur
+    alert(response.message);
+  }
+
+};
 </script>
-
-<style>
-
-</style>
