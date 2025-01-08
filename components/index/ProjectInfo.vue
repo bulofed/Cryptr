@@ -2,7 +2,7 @@
   <h1 class="text-6xl tracking-tight text-center font-extrabold pt-10 text-zinc-900 dark:text-white">Comment ça marche ?</h1>
 
   <div class="flex flex-col gap-16 max-w-5xl mx-auto pt-16 pb-20 dark:text-white text-lg">
-    <div class="neon !border-gray-200 dark:shadow-blue-500 rounded-lg px-6 py-12">
+    <div class="neon !border-gray-900 dark:shadow-blue-500 rounded-lg px-6 py-12 text-xl ">
       <p>
         Le but du projet est de créer une plateforme web dédiée à la résolution 
         d'énigmes centrées sur la cryptographie.<br>
@@ -11,13 +11,13 @@
         Chaque énigme résolue rapportera des points, ajustés selon l’utilisation d’indices, et les utilisateurs pourront se regrouper en équipes pour participer à des compétitions avec un classement général.
       </p>
     </div>
-    <div class="neon !border-gray-200 dark:shadow-rose-500 rounded-lg px-6 py-12 flex justify-center">
+    <div class="neon !border-gray-900 dark:shadow-rose-500 rounded-lg px-6 py-12 flex justify-center">
       <ul class="flex gap-6">
-        <li>Butor Loic (Chef de projet )</li>
-        <li>Lecoustre Malcom</li>
-        <li>Minet Lorik</li>
-        <li>Pierru Mathéo</li>
-        <li>Hallot Hugo </li>
+        <strong><li>Butor Loic</li></strong>  
+        <strong><li>Lecoustre Malcom</li> </strong>
+        <strong><li>Minet Lorik</li>  </strong>
+        <strong><li>Pierru Mathéo</li> </strong>
+        <strong><li>Hallot Hugo </li> </strong>
       </ul>
     </div>
   </div>
