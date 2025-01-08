@@ -23,8 +23,7 @@ onMounted(() => {
     <nav
       class="flex space-x-8 items-center text-base font-sans font-bold"
     >
-      <NuxtLink to="/dashboard">Dashboard</NuxtLink>
-      <NuxtLink to="/challenge">Challenge</NuxtLink>
+      <NuxtLink to="/challenges">Challenges</NuxtLink>
       <NuxtLink to="/classement">Classement</NuxtLink>
       <NuxtLink to="/connexion" v-if="!user">Connexion</NuxtLink>
       <button @click="logout" v-else>Déconnexion</button>
