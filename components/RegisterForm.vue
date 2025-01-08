@@ -21,17 +21,22 @@ const onCaptchaVerified = (response) => {
 };
 
 const onSubmit = async () => {
-    if (!formData.value.recaptchaResponse){
-          alert('Veuillez valider le captcha!');
-          return;
-    }
-
     try {
-        const user = await handleSubmit(formData.value.username, formData.value.email, formData.value.password, formData.value.recaptchaResponse);
-        Cookies.set('session', JSON.stringify(user), { expires: rememberMe.value ? 7 : null });
-        router.push('/');
+      if (!formData.value.recaptchaResponse){
+        alert('Veuillez valider le captcha!');
+        return;
+      }
+
+      if (formData.value.username.includes(' ')){
+        alert('Le caractère "espace" n\'est pas valide');
+        return
+      }
+
+      const user = await handleSubmit(formData.value.username, formData.value.email, formData.value.password, formData.value.recaptchaResponse);
+      Cookies.set('session', JSON.stringify(user), { expires: rememberMe.value ? 7 : null });
+      router.push('/');
     } catch (err) {
-        alert('Registration failed: ' + err.message);
+      alert('Registration failed: ' + err.message);
     }
 };
 </script>
