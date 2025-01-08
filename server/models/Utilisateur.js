@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const utilisateurSchema = new mongoose.Schema({
   username: { type: String, required: true },
@@ -9,26 +9,32 @@ const utilisateurSchema = new mongoose.Schema({
       title: { type: String, required: true },
       difficultyLevel: { type: Number, required: true },
       numberOfTry: { type: Number, default: 0 },
-      state : { type: String },
+      state: { type: String },
       completionTime: { type: Number, default: 0 },
-      dateCompletion: { type: Date }
-    }
+      dateCompletion: { type: Date },
+    },
   ],
-
+  unlockedClues: [
+    {
+      title: { type: String, required: true },
+      Imgpath: { type: String, required: true },
+      description: { type: String, required: true },
+    },
+  ],
   team: {
     teamName: { type: String },
     members: [String],
     statistics: {
       resolvedClue: { type: Number, default: 0 },
-      averageTimeResolution: { type: Number, default: 0 }
-    }
-  }
-})
+      averageTimeResolution: { type: Number, default: 0 },
+    },
+  },
+});
 
 const UtilisateurModel = mongoose.model(
-  'Utilisateur',
+  "Utilisateur",
   utilisateurSchema,
-  'Utilisateur'
-)
+  "Utilisateur"
+);
 
-export default UtilisateurModel
+export default UtilisateurModel;
