@@ -121,7 +121,7 @@ const sortedEnigmes = computed(() => {
         <br>
         <ul class="text-white">
           <li v-for="command in commands" :key="command.name">
-            <button><strong>{{ command.name }}</strong></button>: {{ command.description }}
+            <button class="font-bold">{{ command.name }}</button>: {{ command.description }}
             <hr class="my-2 border-gray-700"/> <!-- Ligne horizontale entre les commandes -->
           </li>
         </ul>
