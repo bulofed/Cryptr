@@ -14,12 +14,12 @@
 
     <button 
       @click="prevSlide" 
-      class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-4 hover:bg-opacity-75 z-20 cursor-pointer">
+      class="absolute left-0 top-2/3 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-4 hover:bg-opacity-75 z-20 cursor-pointer">
       &#8592;
     </button>
     <button 
       @click="nextSlide" 
-      class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-4 hover:bg-opacity-75 z-20 cursor-pointer">
+      class="absolute right-0 top-2/3 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-4 hover:bg-opacity-75 z-20 cursor-pointer">
       &#8594;
     </button>
 
@@ -63,7 +63,7 @@ const updateSlidePosition = () => {
 }
 
 const startAutoSlide = () => {
-  slideInterval.value = setInterval(nextSlide, 5000) // Change de slide toutes les 5 secondes
+  slideInterval.value = setInterval(nextSlide, 5000) 
 }
 
 const stopAutoSlide = () => {

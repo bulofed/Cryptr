@@ -42,7 +42,7 @@ const sortedEnigmes = computed(() => {
   <div v-else class="challenges-grid grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <div v-for="enigme in sortedEnigmes" 
         :key="enigme._id" 
-        class="challenge-card border border-bl rounded-lg px-12 py-16 bg-zinc-100 dark:bg-zinc-800 shadow-md relative min-h-[240px] transition-all duration-300"
+        class="challenge-card border border-bl rounded-lg px-12 py-16 bg-zinc-100 dark:bg-zinc-800 shadow-md relative min-h-[240px] transition-all duration-300 transform hover:scale-105"
         :class="{
           'hover:shadow-[4px_4px_0_0_rgba(34,197,94,0.6)]': enigme.difficultyLevel === 0,
           'hover:shadow-[4px_4px_0_0_rgba(234,179,8,0.6)]': enigme.difficultyLevel === 1,
