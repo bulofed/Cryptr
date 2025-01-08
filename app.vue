@@ -20,7 +20,7 @@ if (import.meta.client) {
   <div class="min-h-screen flex flex-col bg-white text-zinc-700 dark:bg-zinc-950 dark:text-white antialiased">
     <Header v-if="!shouldHideLayout" />
 
-    <NuxtPage class="flex-1"/>
+    <NuxtPage class="grow"/>
     
     <Footer v-if="!shouldHideLayout"/>
   </div>

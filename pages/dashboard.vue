@@ -1,11 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
-        <Dashboard/>
+    <Dashboard />
 </template>
-
-<style>
-
-</style>

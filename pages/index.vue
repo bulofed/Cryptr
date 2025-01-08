@@ -5,8 +5,8 @@ import { provide, ref, onMounted } from 'vue'
 const { user, loadSession } = useSession()
 const isSessionLoaded = ref(false)
 
-onMounted(async () => {
-  await loadSession()
+onMounted(() => {
+  loadSession()
   isSessionLoaded.value = true
 })
 
