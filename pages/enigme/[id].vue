@@ -63,6 +63,8 @@ const commands = [
   { name: '/inspect [content]',description:'Inspect the current enigma'}
 ];
 
+
+
 const goToEnigma = (id) => {
   router.push(`/enigme/${id}`);
 };
@@ -115,14 +117,19 @@ const sortedEnigmes = computed(() => {
         >
           ✖
         </button>
-        <p class="text-white p-2 text-lg">Liste des commandes du Terminal</p>
+        <p class="text-white p-2 text-lg font-extrabold">Liste des commandes du Terminal</p>
         <br>
-        <ul class="text-white text-lg">
+        <ul class="text-white">
           <li v-for="command in commands" :key="command.name">
             <button><strong>{{ command.name }}</strong></button>: {{ command.description }}
             <hr class="my-2 border-gray-700"/> <!-- Ligne horizontale entre les commandes -->
           </li>
         </ul>
+
+        <p class="text-white p-2 text-lg font-extrabold py-3">Site utile : </p>
+        <a href="https://www.dcode.fr/" class="text-white" target="_blank">dcode.fr </a>
+        <a href="https://stylesuxx.github.io/steganography/" class="text-white" target="_blank">steganography</a>
+      
       </div>
     </transition>
 
@@ -137,7 +144,7 @@ const sortedEnigmes = computed(() => {
       </button>
       <div class="text-white">
         <p>Liste des énigmes :</p>
-        <ul>
+        <ul class="text-lg py-5  ">
           <li v-for= "(enigme, index ) in sortedEnigmes" in  :key="enigme._id" @click="goToEnigma(enigme._id)">
             {{ index + 1 }}- <button>{{ enigme.title }}</button>  
           </li>
