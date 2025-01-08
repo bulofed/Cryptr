@@ -98,7 +98,7 @@ const commands = {
 
       if (arg === enigma.solution) { 
         clearInterval(timerInterval);
-        terminalLines.value.push('Correct! You solved it! 🎉');
+        terminalLines.value.push(enigma.completionMessage);
 
         if (user.value) {
           const userData = await fetchUser(user.value.username);

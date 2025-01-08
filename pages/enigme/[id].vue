@@ -87,7 +87,7 @@ const sortedEnigmes = computed(() => {
         v-if="enigma && enigma.imgPath" 
         :src="`/${enigma.imgPath}`" 
         alt="Enigma Image" 
-        style="width: 25%"
+        style="width: 20%"
       />
     </div>  
 
