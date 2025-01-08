@@ -13,11 +13,11 @@
     </div>
     <div class="neon !border-gray-900 dark:shadow-rose-500 rounded-lg px-6 py-12 flex justify-center">
       <ul class="flex gap-6">
-        <strong><li class="list-item">Butor Loic</li></strong>  
-        <strong><li class="list-item">Hallot Hugo </li> </strong>
-        <strong><li class="list-item">Lecoustre Malcom</li> </strong>
-        <strong><li class="list-item">Minet Lorik</li>  </strong>
-        <strong><li class="list-item">Pierru Mathéo</li> </strong>
+        <li class="list-item">Butor Loic</li>
+        <li class="list-item">Hallot Hugo </li>
+        <li class="list-item">Lecoustre Malcom</li>
+        <li class="list-item">Minet Lorik</li>
+        <li class="list-item">Pierru Mathéo</li>
       </ul>
     </div>
   </div>
@@ -37,5 +37,6 @@
 
 .list-item {
   padding-left: 3rem;
+  font-weight: 700;
 }
 </style>

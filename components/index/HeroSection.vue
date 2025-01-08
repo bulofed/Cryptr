@@ -179,22 +179,22 @@ onMounted(async () => {
       <div class="flex justify-center gap-20 font-code text-center pt-20">
         <div>
           <p class="text-9xl font-bold text-green-400 transition-all duration-300 transform hover:scale-110">{{ userCount }}</p>
-          <p class="text-4xl"> <strong>Utilisateur actifs</strong> </p>
+          <p class="text-4xl bold">Utilisateur actifs</p>
         </div>
         <div> 
           <p class="text-9xl font-bold text-orange-600 transition-all duration-300 hover:scale-110 ">{{ enigmeCountfinish }}</p>
-          <p class="text-4xl"><strong>Cryptanalyses complétées </strong></p>
+          <p class="text-4xl bold">Cryptanalyses complétées</p>
         </div>
         <div>
           <p class="text-9xl font-bold text-red-600 hover:text-10xl transition-all duration-300 hover:scale-110"> {{ enigmeCount }}</p>
-          <p class="text-4xl"> <strong>Défis disponibles</strong></p>
+          <p class="text-4xl bold"> disponibles</p>
         </div>
       </div>
 
       <div class="flex justify-center pt-20">
         <a
           @click="handleStartChallenge"
-          class="py-4 px-6 rounded-lg bg-blue-600 hover:bg-blue-900 dark:bg-sky-500 dark:hover:bg-sky-400 flex transition text-white font-semibold cursor-pointer transition-all duration-300 hover:scale-110 ">
+          class="py-4 px-6 rounded-lg bg-blue-600 hover:bg-blue-900 dark:bg-sky-500 dark:hover:bg-sky-400 flex text-white font-semibold cursor-pointer transition-all duration-300 hover:scale-110 ">
           Commencer le challenge
         </a>
       </div>
