@@ -13,11 +13,11 @@
     </div>
     <div class="neon !border-gray-900 dark:shadow-rose-500 rounded-lg px-6 py-12 flex justify-center">
       <ul class="flex gap-6">
-        <strong><li>Butor Loic</li></strong>  
-        <strong><li>Lecoustre Malcom</li> </strong>
-        <strong><li>Minet Lorik</li>  </strong>
-        <strong><li>Pierru Mathéo</li> </strong>
-        <strong><li>Hallot Hugo </li> </strong>
+        <strong><li class="list-item">Butor Loic</li></strong>  
+        <strong><li class="list-item">Hallot Hugo </li> </strong>
+        <strong><li class="list-item">Lecoustre Malcom</li> </strong>
+        <strong><li class="list-item">Minet Lorik</li>  </strong>
+        <strong><li class="list-item">Pierru Mathéo</li> </strong>
       </ul>
     </div>
   </div>
@@ -32,5 +32,10 @@
               0 0 0.8rem var(--tw-shadow-color),
               0 0 2.8rem var(--tw-shadow-color),
               inset 0 0 1.3rem var(--tw-shadow-color);
+}
+
+
+.list-item {
+  padding-left: 3rem;
 }
 </style>

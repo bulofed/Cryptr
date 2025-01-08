@@ -20,7 +20,4 @@ provide('isSessionLoaded', isSessionLoaded)
     <IndexCarousel />
     <IndexProjectInfo />
   </div>
-  <div v-else>
-    Loading...
-  </div>
 </template>

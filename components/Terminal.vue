@@ -2,6 +2,8 @@
 import { useRouter } from 'vue-router';
 import { useSession } from '~/composable/useSession';
 import { useEnigma, useUnlockedEnigmas } from '~/composable/useEnigma';
+import { ref, onMounted, onUnmounted, nextTick } from 'vue';
+
 
 const { user, loadSession } = useSession();
 const { fetchCurrentEnigma } = useEnigma();
@@ -10,7 +12,7 @@ const { enigmes, fetchUnlockedEnigmas } = useUnlockedEnigmas();
 const router = useRouter();
 const terminalInput = ref('');
 const terminalLines = ref([]);
-const displayText = "Hello, this is a simulated terminal. Type /help for commands.";
+const enigmaDescription = ref('');
 const MAX_CHARS = 100;
 let interrupted = false;
 
@@ -222,12 +224,29 @@ const typeText = async (text) => {
   handleEnter();
 };
 
-onMounted(() => {
-  loadSession();
-  typeText(displayText);
+const fetchEnigmaDescription = async () => {
+  try {
+    const enigma = await fetchCurrentEnigma();
+    if (enigma && enigma.description) {
+      enigmaDescription.value = enigma.description;
+    } else {
+      enigmaDescription.value = "No enigma description available.";
+    }
+  } catch (error) {
+    console.error('Failed to fetch enigma description:', error);
+    enigmaDescription.value = "Error fetching enigma description.";
+  }
+};
+
+onMounted(async () => {
+  await loadSession();
+  await fetchUnlockedEnigmas(user);
+  await fetchEnigmaDescription();
+  typeText(enigmaDescription.value);
   timerInterval = setInterval(() => {
     timer += 1;
   }, 1000);
+  document.addEventListener('keydown', handleCtrlC);
 });
 
 onUnmounted(() => {
