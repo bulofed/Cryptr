@@ -1,7 +1,8 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useEnigma, useUnlockedEnigmas } from '~/composable/useEnigma';
 import { useSession } from '~/composable/useSession';
+import { useRouter } from 'vue-router';
 
 const enigma = ref(null);
 const { fetchCurrentEnigma } = useEnigma();
@@ -28,6 +29,10 @@ const closePanelsOnEscape = (event) => {
   }
 };
 
+const updateEnigmas = async () => {
+  await fetchUnlockedEnigmas(user);
+};
+
 onMounted(async () => {
   loadSession();
   enigma.value = await fetchCurrentEnigma();
@@ -35,7 +40,7 @@ onMounted(async () => {
     enigma.value.imgPath = enigma.value.imgPath.replace(/^public\//, '');
   }
   if (user.value) {
-    await fetchUnlockedEnigmas(user);
+    await updateEnigmas();
   }
 
   window.addEventListener('keydown', closePanelsOnEscape);
@@ -43,6 +48,10 @@ onMounted(async () => {
 
 onUnmounted(() => {
   window.removeEventListener('keydown', closePanelsOnEscape);
+});
+
+watch(enigmes, async () => {
+  await updateEnigmas();
 });
 
 const commands = [
