@@ -73,12 +73,98 @@ onMounted(async () => {
 }
 
 
+.hexagone {
+  position: absolute;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.hexagone:after, .hexagone:before {
+  content: "";
+  position: absolute;
+  width: 0;
+  border-top: 35px solid transparent;
+  border-bottom: 35px solid transparent;
+}
+
+.hexagone1 {
+  background-color: #00800040;
+  width: 350px; 
+  height: 350px; 
+}
+
+.hexagone1:after {
+  border-top-color: #00800040;
+}
+
+.hexagone1:before {
+  border-bottom-color: #00800040;
+}
+
+.hexagone2 {
+  background-color: #FF000040;
+  width: 300px; 
+  height: 300px; 
+}
+
+.hexagone2:after {
+  border-top-color: #FF000040;
+}
+
+.hexagone2:before {
+  border-bottom-color: #FF000040;
+}
+
+.hexagone3 {
+  background-color: #0000FF40;
+  width: 100px; 
+  height: 100px; 
+}
+
+.hexagone3:after {
+  border-top-color: #0000FF40;
+}
+
+.hexagone3:before {
+  border-bottom-color: #0000FF40;
+}
+
+.hexagone4 {
+  background-color: #ffa20040;
+  width: 200px; 
+  height: 200px; 
+}
+
+.hexagone4:after {
+  border-top-color: #ffa20040;
+}
+
+.hexagone4:before {
+  border-bottom-color: #ffa20040;
+}
+
+.hexagone5 {
+  background-color: #fff20040;
+  width: 140px; 
+  height: 140px; 
+}
+
+.hexagone5:after {
+  border-top-color: #fff20040;
+}
+
+.hexagone5:before {
+  border-bottom-color: #fff20040;
+}
+
 </style>
 
 <template>
   <div class="max-w-5xl mx-auto pt-20 relative">
-    <div class="hexagone"></div>
-        <div class="hexagone" style="top: 60%; left: 60%;"></div>
+    <div class="hexagone hexagone1 dark:hidden" style="top: -5%; left: 88%;"></div>
+    <div class="hexagone hexagone2 dark:hidden" style="top: 83%; left: -35%;"></div>
+    <div class="hexagone hexagone3 dark:hidden" style="top: 2%; left:  -35%;"></div>
+    <div class="hexagone hexagone4 dark:hidden" style="top: 80%; left: 85%;"></div>
+    <div class="hexagone hexagone5 dark:hidden" style="top: 35%; left: 35%;"></div>
 
     <div class="absolute left-[2  0rem] -bottom-32 size-[50rem] radial-1 opacity-0 dark:opacity-20"/>
     <div class="absolute right-[20rem] top-12 size-[65rem] radial-2 opacity-0 dark:opacity-20"/>
