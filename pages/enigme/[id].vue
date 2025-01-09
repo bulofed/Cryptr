@@ -76,7 +76,7 @@ const sortedEnigmes = computed(() => {
 </script>
 
 <template>
-  <NuxtLink to="/challenge" class="absolute top-8 left-8 cursor-pointer z-10">
+  <NuxtLink to="/challenges" class="absolute top-8 left-8 cursor-pointer z-10">
     <IconChevronLeft class="size-12 stroke-white"/>
   </NuxtLink>
   <div class="flex flex-col py-4 h-screen relative bg-hero-pattern bg-cover bg-center bg-no-repeat">
