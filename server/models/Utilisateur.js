@@ -29,7 +29,7 @@ const utilisateurSchema = new mongoose.Schema({
       averageTimeResolution: { type: Number, default: 0 },
     },
   },
-  pointsEarend: { type: Number, default: 0 },
+  pointsEarned: { type: Number, default: 0 },
 });
 
 const UtilisateurModel = mongoose.model(
