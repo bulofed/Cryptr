@@ -139,7 +139,21 @@ const commands = {
           }
         }
       } else {
-        terminalLines.value.push('Wrong solution. Try again!');
+        terminalLines.value.push('Wrong. Try again!');
+        const userData = await fetchUser(user.value.username);
+        const enigmaIndex = userData.unlockedEnigmas.findIndex(e => e.title === enigma.title);
+        if (userData.unlockedEnigmas[enigmaIndex].state !== 'solved') {
+          userData.unlockedEnigmas[enigmaIndex].numberOfTry += 1;
+          print(userData.unlockedEnigmas[enigmaIndex].numberOfTry);
+          console.log(userData.unlockedEnigmas[enigmaIndex].numberOfTry);
+          await $fetch(`/api/utilisateurs/${user.value.username}`, {
+                  method: 'PATCH',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    unlockedEnigmas: userData.unlockedEnigmas
+                  })
+                });
+        }
       }
     }
   },
