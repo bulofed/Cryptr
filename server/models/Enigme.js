@@ -18,6 +18,7 @@ const enigmeSchema = new mongoose.Schema({
   textInspect: { type: String },
   unlocksEnigmas: { type: [String] },
   completionMessage: { type: String },
+  pointsAwarded: { type: Number, default: 100 },
 });
 
 const EnigmeModel = mongoose.model("Enigme", enigmeSchema, "Enigme");
