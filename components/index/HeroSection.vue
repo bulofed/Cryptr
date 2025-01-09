@@ -52,7 +52,7 @@ const fetchEnigmeCount = async () => {
 };
 
 const handleStartChallenge = () => {
-  router.push('/challenge');
+  router.push('/challenges');
 };
 
 onMounted(async () => {
