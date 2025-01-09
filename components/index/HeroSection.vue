@@ -86,6 +86,10 @@ onMounted(async () => {
   border-top: 35px solid transparent;
   border-bottom: 35px solid transparent;
 }
+
+.user {
+  font-size: 60%;
+}
 </style>
 
 <template>
@@ -100,7 +104,7 @@ onMounted(async () => {
     <div class="absolute left-48 bottom-32 size-[35rem] radial-3 opacity-0 dark:opacity-20"/>
     <div class="relative">
       <h1 class="text-left font-extrabold tracking-tight text-6xl text-zinc-900 dark:text-white my-12">
-         Déchiffrez <span class="text-red inline-block text-red-600">l'impossible</span> <span v-if="user">{{ user.username }}</span>🕵️‍♂️
+         Déchiffrez <span class="text-red inline-block text-red-600">l'impossible</span> <span v-if="user" class="user">{{ user.username }}</span>🕵️‍♂️
         <span class="block "> <span class="text-blue inline-block text-blue-600">Rejoignez</span> l'élite 🚀</span>
       </h1>
 
@@ -111,13 +115,14 @@ onMounted(async () => {
           <p class="text-4xl bold">Nombres d'utilisateurs</p>
         </div>
         <div>
+          <p class="text-9xl font-bold text-orange-400 transition-all duration-300 transform hover:scale-110">{{ enigmeCountfinish }}</p>
+          <p class="text-4xl bold">Énigmes résolues par tous</p>
+        </div>
+        <div>
           <p class="text-9xl font-bold text-red-600 hover:text-10xl transition-all duration-300 hover:scale-110"> {{ enigmeCount }}</p>
           <p class="text-4xl bold">Challenges disponibles</p>
         </div>
-        <div>
-          <p class="text-9xl font-bold text-orange-400 transition-all duration-300 transform hover:scale-110">{{ enigmeCountfinish }}</p>
-          <p class="text-4xl bold">Challenges complétés</p>
-        </div>
+
       </div>
 
       <div class="flex justify-center pt-20">
