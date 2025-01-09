@@ -84,14 +84,6 @@ const commands = {
   },
   '/try': {
     description: 'Try a solution for the current enigma',
-    action: () => terminalLines.value = []
-  },
-  '/try': {
-    description: 'Try a solution for the current enigma',
-action: () => terminalLines.value = []
-  },
-  '/try': {
-    description: 'Try a solution for the current enigma',
     action: async (arg) => {
       if (!arg) {
         terminalLines.value.push('Usage: /try <your-solution>');
@@ -112,23 +104,17 @@ action: () => terminalLines.value = []
           const userData = await fetchUser(user.value.username);
           if (userData && userData.unlockedEnigmas) {
             const enigmaIndex = userData.unlockedEnigmas.findIndex(e => e.title === enigma.title);
-            if (enigmaIndex !== -1) {
-              if (userData.unlockedEnigmas[enigmaIndex].state !== 'solved') { // Vérifie si l'énigme n'est pas déjà résolue
-                userData.unlockedEnigmas[enigmaIndex].state = 'solved';
-                userData.unlockedEnigmas[enigmaIndex].completionTime = timer;
-                userData.unlockedEnigmas[enigmaIndex].dateCompletion = new Date();
-                userData.pointsEarned = (userData.pointsEarned || 0) + (enigma.pointsAwarded || 0); 
-                await $fetch(`/api/utilisateurs/${user.value.username}`, {
-                  method: 'PATCH',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    unlockedEnigmas: userData.unlockedEnigmas,
-                    pointsEarend: userData.pointsEarend
-                  })
-                });
-              } else {
-                terminalLines.value.push('You have already solved this enigma.');
-              }
+            if (enigmaIndex !== -1) { // passe l'etat de l'enigme à solved
+              userData.unlockedEnigmas[enigmaIndex].state = 'solved';
+              userData.unlockedEnigmas[enigmaIndex].completionTime = timer;
+              userData.unlockedEnigmas[enigmaIndex].dateCompletion = new Date();
+              await $fetch(`/api/utilisateurs/${user.value.username}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  unlockedEnigmas: userData.unlockedEnigmas
+                })
+              });
             }
             if (Array.isArray(enigma.unlocksEnigmas) && enigma.unlocksEnigmas.length > 0) { // débloque les potentielles enigmes suivantes
               for (const enigmaId of enigma.unlocksEnigmas) {
@@ -158,8 +144,6 @@ action: () => terminalLines.value = []
         const enigmaIndex = userData.unlockedEnigmas.findIndex(e => e.title === enigma.title);
         if (userData.unlockedEnigmas[enigmaIndex].state !== 'solved') {
           userData.unlockedEnigmas[enigmaIndex].numberOfTry += 1;
-          print(userData.unlockedEnigmas[enigmaIndex].numberOfTry);
-          console.log(userData.unlockedEnigmas[enigmaIndex].numberOfTry);
           await $fetch(`/api/utilisateurs/${user.value.username}`, {
                   method: 'PATCH',
                   headers: { 'Content-Type': 'application/json' },
