@@ -84,14 +84,6 @@ const commands = {
   },
   '/try': {
     description: 'Try a solution for the current enigma',
-    action: () => terminalLines.value = []
-  },
-  '/try': {
-    description: 'Try a solution for the current enigma',
-action: () => terminalLines.value = []
-  },
-  '/try': {
-    description: 'Try a solution for the current enigma',
     action: async (arg) => {
       if (!arg) {
         terminalLines.value.push('Usage: /try <your-solution>');
