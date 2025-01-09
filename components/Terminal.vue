@@ -126,9 +126,7 @@ action: () => terminalLines.value = []
                     pointsEarend: userData.pointsEarend
                   })
                 });
-              } else {
-                terminalLines.value.push('You have already solved this enigma.');
-              }
+              } 
             }
             if (Array.isArray(enigma.unlocksEnigmas) && enigma.unlocksEnigmas.length > 0) { // débloque les potentielles enigmes suivantes
               for (const enigmaId of enigma.unlocksEnigmas) {
