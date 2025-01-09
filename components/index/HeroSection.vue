@@ -94,11 +94,11 @@ onMounted(async () => {
 
 <template>
   <div class="max-w-5xl mx-auto pt-20 relative">
-    <div class="absolute w-[350px] h-[350px] bg-green-400/25 hexagon" style="top: -5%; left: 88%;"></div>
-    <div class="absolute w-[300px] h-[300px] bg-red-400/25 hexagon" style="top: 83%; left: -35%;"></div>
-    <div class="absolute w-[100px] h-[100px] bg-blue-400/25 hexagon" style="top: 2%; left: -35%;"></div>
-    <div class="absolute w-[200px] h-[200px] bg-orange-400/25 hexagon" style="top: 80%; left: 85%;"></div>
-    <div class="absolute w-[140px] h-[140px] bg-yellow-400/25 hexagon" style="top: 35%; left: 35%;"></div>
+    <div class="absolute w-[350px] h-[350px] bg-green-400/25 hexagon dark:hidden" style="top: -5%; left: 88%;"></div>
+    <div class="absolute w-[300px] h-[300px] bg-red-400/25 hexagon dark:hidden" style="top: 83%; left: -35%;"></div>
+    <div class="absolute w-[100px] h-[100px] bg-blue-400/25 hexagon dark:hidden" style="top: 2%; left: -35%;"></div>
+    <div class="absolute w-[200px] h-[200px] bg-orange-400/25 hexagon dark:hidden" style="top: 80%; left: 85%;"></div>
+    <div class="absolute w-[140px] h-[140px] bg-yellow-400/25 hexagon dark:hidden" style="top: 35%; left: 35%;"></div>
     <div class="absolute left-[2  0rem] -bottom-32 size-[50rem] radial-1 opacity-0 dark:opacity-20"/>
     <div class="absolute right-[20rem] top-12 size-[65rem] radial-2 opacity-0 dark:opacity-20"/>
     <div class="absolute left-48 bottom-32 size-[35rem] radial-3 opacity-0 dark:opacity-20"/>
