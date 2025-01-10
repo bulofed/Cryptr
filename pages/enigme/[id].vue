@@ -55,12 +55,13 @@ watch(enigmes, async () => {
 });
 
 const commands = [
-  { name: '/help', description: 'Show available commands'},
-  { name: '/desc', description: 'Show current enigma description'},
-  { name: '/clear',description: 'Clear Termnial'},
-  { name: '/try' , description: 'Try a solution for the current enigma'},
-  { name: '/go_to',description: 'Go to the enigma with the specified name or index'},
-  { name: '/inspect [content]',description:'Inspect the current enigma'}
+  { name: '/help', description: 'donne la liste des commandes disponibles'},
+  { name: '/desc', description: 'donne la description de l énigme actuelle'},
+  { name: '/clear',description: 'efface le terminal'},
+  { name: '/try' , description: 'essaye une solution pour l énigme actuelle'},
+  { name: '/go_to',description: 'va à l énigme avec le nom ou l index spécifié'},
+  { name: '/inspect',description:'inspecte en detaille l enigme, utile pour copier les textes chiffrés'},
+  { name: 'CTRL + C', description: 'affiche instantanément tout le texte d un message  dans le terminal au lieu de caractères par caractères'}
 ];
 
 
