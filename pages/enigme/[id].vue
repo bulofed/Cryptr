@@ -61,6 +61,7 @@ const commands = [
   { name: '/try' , description: 'essaye une solution pour l énigme actuelle'},
   { name: '/go_to',description: 'va à l énigme avec le nom ou l index spécifié'},
   { name: '/inspect',description:'inspecte en detaille l enigme, utile pour copier les textes chiffrés'},
+  { name: '/clue',description: 'Try a solution for the current enigma'},
   { name: 'CTRL + C', description: 'affiche instantanément tout le texte d un message  dans le terminal au lieu de caractères par caractères'}
 ];
 

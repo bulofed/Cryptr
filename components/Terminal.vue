@@ -13,6 +13,7 @@ const router = useRouter();
 const terminalInput = ref('');
 const terminalLines = ref([]);
 const enigmaDescription = ref('');
+const cluesUsed = ref(0);
 const MAX_CHARS = 100;
 let interrupted = false;
 
@@ -67,6 +68,7 @@ const commands = {
       });
     }
   },
+  
   '/desc': {
     description: 'Show current enigma description',
     action: async () => {
@@ -78,10 +80,12 @@ const commands = {
       }
     }
   },
+
   '/clear': {
     description: 'Clear terminal',
     action: () => terminalLines.value = []
   },
+
   '/try': {
     description: 'Try a solution for the current enigma',
     action: async (arg) => {
@@ -96,71 +100,72 @@ const commands = {
         return;
       }
 
-      if (arg === enigma.solution) { 
-        clearInterval(timerInterval);
-        typeText(enigma.completionMessage);
+      const userData = await fetchUser(user.value.username);
+      const enigmaIndex = userData.unlockedEnigmas.findIndex(e => e.title === enigma.title);
+      const userEnigma = userData.unlockedEnigmas[enigmaIndex];
+      if (userEnigma.state !== 'solved'){
+        userEnigma.numberOfTry++;
+      }
 
-        if (user.value) {
-          const userData = await fetchUser(user.value.username);
-          if (userData && userData.unlockedEnigmas) {
-            const enigmaIndex = userData.unlockedEnigmas.findIndex(e => e.title === enigma.title);
-            if (enigmaIndex !== -1) {
-              if (userData.unlockedEnigmas[enigmaIndex].state !== 'solved') { // Vérifie si l'énigme n'est pas déjà résolue
-                userData.unlockedEnigmas[enigmaIndex].state = 'solved';
-                userData.unlockedEnigmas[enigmaIndex].completionTime = timer;
-                userData.unlockedEnigmas[enigmaIndex].dateCompletion = new Date();
-                userData.pointsEarned = (userData.pointsEarned || 0) + (enigma.pointsAwarded || 0); 
-                await $fetch(`/api/utilisateurs/${user.value.username}`, {
-                  method: 'PATCH',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    unlockedEnigmas: userData.unlockedEnigmas,
-                    pointsEarend: userData.pointsEarend
-                  })
-                });
-              } 
+      if (arg === enigma.solution) {
+        if (userEnigma.state !== 'solved') { // Vérifie si l'énigme n'est pas déjà résolue
+          clearInterval(timerInterval);
+          typeText(enigma.completionMessage);
+
+          userEnigma.state = 'solved';
+          userEnigma.completionTime = timer;
+          userEnigma.dateCompletion = new Date();
+          
+          const calculatePoints = () => {
+            let basePoints = enigma.pointsAwarded || 0;
+
+            for (let i = 0; i < cluesUsed.value; i++) {
+              basePoints *= 0.75;
             }
-            if (Array.isArray(enigma.unlocksEnigmas) && enigma.unlocksEnigmas.length > 0) { // débloque les potentielles enigmes suivantes
-              for (const enigmaId of enigma.unlocksEnigmas) {
-                const newEnigma = await fetchEnigmaByName(enigmaId);
-                if (newEnigma) {
-                  const isAlreadyUnlocked = userData.unlockedEnigmas.some(e => e.title === newEnigma.title);
-                  if (!isAlreadyUnlocked) {
-                    userData.unlockedEnigmas.push({
-                      title: newEnigma.title,
-                      state: 'available',
-                      difficultyLevel: newEnigma.difficultyLevel
-                    });
-                  }
-                }
+            
+            if (userEnigma.numberOfTry === 1 && cluesUsed.value === 0) {
+              basePoints *= 2;
+            } else if (userEnigma.numberOfTry > 1) {
+              basePoints -= userEnigma.numberOfTry * 10;
+            }
+            
+            return basePoints > 0 ? Math.floor(basePoints) : 0;
+          };
+          
+          const points = calculatePoints();
+          userData.pointsEarned += points;
+        }
+
+        if (Array.isArray(enigma.unlocksEnigmas) && enigma.unlocksEnigmas.length > 0) {  // débloque les potentielles enigmes suivantes
+          for (const enigmaId of enigma.unlocksEnigmas) {
+            const newEnigma = await fetchEnigmaByName(enigmaId);
+            if (newEnigma) {
+              const isAlreadyUnlocked = userData.unlockedEnigmas.some(e => e.title === newEnigma.title);
+              if (!isAlreadyUnlocked) {
+                userData.unlockedEnigmas.push({
+                  title: newEnigma.title,
+                  state: 'available',
+                  difficultyLevel: newEnigma.difficultyLevel
+                });
               }
-              await $fetch(`/api/utilisateurs/${user.value.username}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(userData)
-              });
             }
           }
         }
       } else {
-        
-        const userData = await fetchUser(user.value.username);
-        const enigmaIndex = userData.unlockedEnigmas.findIndex(e => e.title === enigma.title);
-        
-        if (userData.unlockedEnigmas[enigmaIndex].state !== 'solved') {
-          userData.unlockedEnigmas[enigmaIndex].numberOfTry += 1;
-          typeText('Wrong. Try again! you tried ' + (userData.unlockedEnigmas[enigmaIndex].numberOfTry) + ' times so far');
-          await $fetch(`/api/utilisateurs/${user.value.username}`, {
-                  method: 'PATCH',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    unlockedEnigmas: userData.unlockedEnigmas
-                  })
-                });
-        }
+        typeText(`Wrong. Try again! You tried ${userEnigma.numberOfTry} times so far.`);
       }
+
+      await $fetch(`/api/utilisateurs/${user.value.username}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          unlockedEnigmas: userData.unlockedEnigmas,
+          pointsEarned: userData.pointsEarned
+        })
+      });
     }
   },
+
   '/go_to': {
     description: 'Go to the enigma with the specified name or index',
     action: async (arg) => {
@@ -178,6 +183,7 @@ const commands = {
       }
     }
   },
+
   '/inspect': {
     description: 'Inspect the current enigma',
     action: async () => {
@@ -189,6 +195,27 @@ const commands = {
       }
     }
   },
+
+  '/clue': {
+    description: 'Unlock one clue',
+    action: async () => {
+      const enigma = await fetchCurrentEnigma();
+      if (!enigma) {
+        terminalLines.value.push('No active enigma found.');
+        return;
+      }
+      
+      if (cluesUsed.value >= (enigma.clues?.length || 0)) {
+        terminalLines.value.push('There are no more clues available.');
+        return;
+      }
+      
+      terminalLines.value.push(enigma.clues[cluesUsed.value]);
+      cluesUsed.value++;
+      console.log(`Clues used: ${cluesUsed.value}`);
+    }
+  },
+
   '/story':{
     description: 'gives the synopsis of the story',
     action:async () => {
