@@ -191,8 +191,15 @@ const commands = {
   },
   '/story':{
     description: 'gives the synopsis of the story',
-    action:() => {
-      typeText("narrateur : Cela faisait des mois que John Smith était dans sa quête pour retrouver le joyau perdu d'Athènes, une magnifique pierre précieuse documentée à multiples reprises à travers l'histoire, dont les mythes expliquent qu'elle disparaissait inexplicablement à la mort de son porteur, puis réapparaissait de manière tout aussi inexpliquée dans les mains de divers intellectuels à travers le monde. \nLa pierre a inspiré de multiples légendes depuis l'antiquité, mais John n'est pas du genre superstitieux, pour lui ce saphir n'était qu'un moyen de sécuriser un beau pactole et de gagner en célébrité, rien de plus. \nIl tremblait d'excitation, cela faisait des décennies que la pierre n'avait pas été vue et en retraçant la vie de ses anciens détenteurs, il trouvait constamment un point commun, une visite dans une certaine région de Grèce.\n Après quelques jours sur place, il avait enfin trouvé ce qu'il cherchait si avidement, une entrée vers des ruines souterraines, à peine visible, couverte de végétation et sur le flanc d'une montagne.\nLa descente fut longue et minutieuse, John déjouant des dizaines de pièges après avoir fait l'erreur d'assumer qu'aucun ne serait présent, une erreur qui lui coûta un doigt.\nMais il y était enfin arrivé, il pouvait le sentir, après cette longue descente il était enfin dans une salle qui n'était non pas un long couloir sinueux, mais une large antichambre avec 5 portes en pierre face à lui.\nBonne chance aventurier, c'est maintenant à vous de faire progresser notre cher John Smith dans sa quête de richesse et de gloire. ")
+    action:async () => {
+      await typeText("narrateur : Cela faisait des mois que John Smith était dans sa quête pour retrouver le joyau perdu d'Athènes, une magnifique pierre précieuse documentée à multiples reprises à travers l'histoire, dont les mythes expliquent qu'elle disparaissait inexplicablement à la mort de son porteur, puis réapparaissait de manière tout aussi inexpliquée dans les mains de divers intellectuels à travers le monde.");
+      await typeText("La pierre a inspiré de multiples légendes depuis l'antiquité, mais John n'est pas du genre superstitieux, pour lui ce saphir n'était qu'un moyen de sécuriser un beau pactole et de gagner en célébrité, rien de plus.");
+      await typeText("Il tremblait d'excitation, cela faisait des décennies que la pierre n'avait pas été vue et en retraçant la vie de ses anciens détenteurs, il trouvait constamment un point commun, une visite dans une certaine région de Grèce.");
+      await typeText("Après quelques jours sur place, il avait enfin trouvé ce qu'il cherchait si avidement, une entrée vers des ruines souterraines, à peine visible, couverte de végétation et sur le flanc d'une montagne.");
+      await typeText("La descente fut longue et minutieuse, John déjouant des dizaines de pièges après avoir fait l'erreur d'assumer qu'aucun ne serait présent, une erreur qui lui coûta un doigt.");
+      await typeText("Mais il y était enfin arrivé, il pouvait le sentir, après cette longue descente il était enfin dans une salle qui n'était non pas un long couloir sinueux, mais une large antichambre avec 5 portes en pierre face à lui.");
+      await typeText("Bonne chance aventurier, c'est maintenant à vous de faire progresser notre cher John Smith dans sa quête de richesse et de gloire.");
+      
     }
   }
 }
