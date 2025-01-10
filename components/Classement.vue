@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 const categories = ref([]);
 const users = ref([]);
@@ -7,6 +7,7 @@ const users = ref([]);
 const category = ref('');
 const period = ref('');
 const difficulty = ref('');
+const pointsSortOrder = ref('');
 
 const fetchUsers = async () => {
   try {
@@ -43,7 +44,7 @@ const matchPeriod = (date) => {
 };
 
 const filteredUsers = computed(() => {
-  return users.value.map(user => {
+  const sortedUsers = users.value.map(user => {
     const filteredEnigmas = (user.unlockedEnigmas || []).filter(enigma => {
       const matchesCategory = !category.value || category.value === "Toutes" || (enigma.categories || []).includes(category.value);
       const matchesPeriod = !period.value || (enigma.dateCompletion && matchPeriod(enigma.dateCompletion));
@@ -55,14 +56,28 @@ const filteredUsers = computed(() => {
     const resolvedClues = filteredEnigmas.filter(enigma => enigma.state === "solved");
     const totalTries = resolvedClues.reduce((sum, enigma) => sum + enigma.numberOfTry, 0);
     const averageTime = resolvedClues.length > 0 ? Math.round(resolvedClues.reduce((sum, enigma) => sum + enigma.completionTime, 0) / resolvedClues.length) : 0;
+    const pointsEarned = user.pointsEarned || 0;
 
     return {
       username: user.username,
       resolvedCount: resolvedClues.length,
       totalTries,
-      averageTime
+      averageTime,
+      pointsEarned
     };
   });
+
+  if (pointsSortOrder.value) {
+    sortedUsers.sort((a, b) => {
+      if (pointsSortOrder.value === 'asc') {
+        return a.pointsEarned - b.pointsEarned;
+      } else {
+        return b.pointsEarned - a.pointsEarned;
+      }
+    });
+  }
+
+  return sortedUsers;
 });
 
 onMounted(() => {
@@ -73,9 +88,8 @@ onMounted(() => {
 <template>
   <div class="flex flex-col items-center min-h-screen">
     <div class="w-full max-w-4xl mt-20 p-3 ">
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
         <div class="flex flex-col">
-
           <select class="bg-gray-800 border border-gray-300 rounded-lg p-3 h-16 text-xl text-white">
             <option disabled selected value="">Catégorie</option>
             <option v-for="category in categories" :key="category" :value="category">
@@ -102,6 +116,14 @@ onMounted(() => {
             <option value="3">Difficile</option>
           </select>
         </div>
+
+        <div class="flex flex-col">
+          <select v-model="pointsSortOrder" class="bg-gray-800 border border-gray-300 rounded-lg p-3 h-16 text-xl text-white">
+            <option disabled selected value="">Points</option>
+            <option value="asc">Croissant</option>
+            <option value="desc">Décroissant</option>
+          </select>
+        </div>
       </div>
       
       <!-- Tableau -->
@@ -113,6 +135,7 @@ onMounted(() => {
               <th class="py-3 px-4 text-left">Enigmes résolues</th>
               <th class="py-3 px-4 text-left">Total d'essaies</th>
               <th class="py-3 px-4 text-left">Temps moyen</th>
+              <th class="py-3 px-4 text-left">Points</th>
             </tr>
           </thead>
 
@@ -122,6 +145,7 @@ onMounted(() => {
               <td class="py-3 px-4">{{ user.resolvedCount }}</td>
               <td class="py-3 px-4">{{ user.totalTries }}</td>
               <td class="py-3 px-4">{{ user.averageTime }}</td>
+              <td class="py-3 px-4">{{ user.pointsEarned }}</td>
             </tr>
           </tbody>
         </table>
@@ -129,5 +153,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-  
-<style></style>
