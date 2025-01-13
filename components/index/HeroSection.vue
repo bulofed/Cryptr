@@ -104,8 +104,8 @@ onMounted(async () => {
     <div class="absolute left-48 bottom-32 size-[35rem] radial-3 opacity-0 dark:opacity-20"/>
     <div class="relative">
       <h1 class="text-left font-extrabold tracking-tight text-6xl text-zinc-900 dark:text-white my-12">
-         Déchiffrez <span class="text-red inline-block text-red-500">l'impossible</span> <span v-if="user" class="text-4xl">{{ user.username }}</span>🕵️‍♂️
-        <span class="block "> <span class="text-blue inline-block text-blue-500">Rejoignez</span> l'élite 🚀</span>
+         Déchiffrez <span class="text-red inline-block text-red-600">l'impossible</span> <span v-if="user" class="user">{{ user.username }}</span>🕵️‍♂️
+        <span class="block "> <span class="text-blue inline-block text-blue-600">Rejoignez</span> l'élite 🚀</span>
       </h1>
 
 
