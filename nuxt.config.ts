@@ -3,7 +3,6 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@formkit/nuxt',
     '@nuxtjs/tailwindcss',
-    '@pinia/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/color-mode',
     '@nuxt/icon',
