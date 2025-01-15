@@ -63,11 +63,11 @@ const sortedEnigmes = computed(() => {
           <p class="text-gray-500">Taux de réussite</p>
         </div>
         <div class="flex flex-col justify-center">
-          <p class="text-5xl font-bold">{{ enigme.statistics.tries }}%</p>
+          <p class="text-5xl font-bold">{{ enigme.statistics.tries }}</p>
           <p class="text-gray-500">Tentatives</p>
         </div>
         <div class="flex flex-col justify-center">
-          <p class="text-5xl font-bold">{{ enigme.statistics.averageResolutionTime }}%</p>
+          <p class="text-5xl font-bold">{{ enigme.statistics.averageResolutionTime }}s</p>
           <p class="text-gray-500">Temps estimé</p>
         </div>
       </div>
