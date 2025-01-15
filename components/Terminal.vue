@@ -14,6 +14,7 @@ const terminalInput = ref('');
 const terminalLines = ref([]);
 const enigmaDescription = ref('');
 const cluesUsed = ref(0);
+const unlockedClues = ref([]);
 const MAX_CHARS = 100;
 let interrupted = false;
 
@@ -58,6 +59,19 @@ const fetchEnigmaByName = async (name) => {
   }
 };
 
+const fetchClueByName = async (name) => {
+  try {
+    const response = await $fetch(`/api/clues/${name}`);
+    if (response.success && response.data) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.error('Failed to fetch clue by name:', error);
+    return null;
+  }
+};
+
 // Commands configuration
 const commands = {
   '/help': {
@@ -74,7 +88,7 @@ const commands = {
     action: async () => {
       const enigma = await fetchCurrentEnigma();
       if (enigma && enigma.description) {
-        typeText(enigma.description);
+        await typeText(enigma.description);
       } else {
         terminalLines.value.push('No enigma found.');
       }
@@ -108,13 +122,19 @@ const commands = {
       }
 
       if (arg === enigma.solution) {
+        await typeText(enigma.completionMessage);
         if (userEnigma.state !== 'solved') { // Vérifie si l'énigme n'est pas déjà résolue
           clearInterval(timerInterval);
-          typeText(enigma.completionMessage);
 
-          userEnigma.state = 'solved';
+          // userEnigma.state = 'solved';
           userEnigma.completionTime = timer;
           userEnigma.dateCompletion = new Date();
+          fetchClueByName(enigma.unlocksClues).then(async (clue) => {
+            if (clue) {
+              await typeText('Tu as débloqué une nouvelle piste : ' + clue.title);
+              unlockedClues.value.push(clue);
+            }
+          });
           
           const calculatePoints = () => {
             let basePoints = enigma.pointsAwarded || 0;
@@ -152,7 +172,7 @@ const commands = {
           }
         }
       } else {
-        typeText(`Wrong. Try again! You tried ${userEnigma.numberOfTry} times so far.`);
+        await typeText(`Wrong. Try again! You tried ${userEnigma.numberOfTry} times so far.`);
       }
 
       await $fetch(`/api/utilisateurs/${user.value.username}`, {
@@ -160,9 +180,12 @@ const commands = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           unlockedEnigmas: userData.unlockedEnigmas,
-          pointsEarned: userData.pointsEarned
+          pointsEarned: userData.pointsEarned,
+          unlockedClues: unlockedClues.value
         })
       });
+
+      userData.unlockedClues.value = [];
     }
   },
 
@@ -296,10 +319,10 @@ const fetchEnigmaDescription = async () => {
 };
 
 onMounted(async () => {
-  await loadSession();
+  loadSession();
   await fetchUnlockedEnigmas(user);
   await fetchEnigmaDescription();
-  typeText(enigmaDescription.value);
+  await typeText(enigmaDescription.value);
   timerInterval = setInterval(() => {
     timer += 1;
   }, 1000);
