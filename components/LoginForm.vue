@@ -12,7 +12,7 @@ const rememberMe = ref(false);
 const emailOrUsername = ref('');
 const password = ref('');
 
-const siteKey = process.env.RECAPTCHA_PUBLIC;
+const cle = process.env.RECAPTCHA_PUBLIC || '6Ld5gK8qAAAAAOfCBTEU0__kqDOt3atAWj1slIdY';
 const recaptchaResponse = ref(null);
 
 const onCaptchaVerified = (response) => {
@@ -125,7 +125,7 @@ const onSubmit = async () => {
             </a>
           </div>
 
-          <vue-recaptcha :sitekey="siteKey" @verify="onCaptchaVerified"></vue-recaptcha>
+          <vue-recaptcha :sitekey="cle" @verify="onCaptchaVerified"></vue-recaptcha>
 
           <!-- Bouton de connexion -->
           <button

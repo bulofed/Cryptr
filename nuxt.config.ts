@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     mongodbName: process.env.MONGODB_NAME,
     recaptchaSecret: process.env.RECAPTCHA_SECRET,
     public: {
-      recaptchaSiteKey: process.env.RECAPTCHA_PUBLIC,
+      recaptchaPublic: process.env.RECAPTCHA_PUBLIC,
     },
   },
   plugins: [
