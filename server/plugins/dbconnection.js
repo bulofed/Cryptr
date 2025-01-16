@@ -1,12 +1,10 @@
 import mongoose from 'mongoose';
 
 export default async () => {
-  const config = useRuntimeConfig();
-
   const connectToDatabase = async () => {
     try {
-      await mongoose.connect(config.mongodbUri, {
-        dbName: config.mongodbName,
+      await mongoose.connect(process.env.MONGODB_URI, {
+        dbName: process.env.MONGODB_NAME,
         connectTimeoutMS: 10000,
         socketTimeoutMS: 45000,
       });

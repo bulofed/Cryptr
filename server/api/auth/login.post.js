@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 
 export default defineEventHandler(async (event) => {
   const { identifier, password, isEmail, recaptchaResponse } = await readBody(event);
-  const config = useRuntimeConfig();
 
   try {
     const recaptchaVerificationResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
@@ -13,7 +12,7 @@ export default defineEventHandler(async (event) => {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        secret: config.recaptchaSecret,
+        secret: process.env.RECAPTCHA_SECRET,
         response: recaptchaResponse,
       }),
     });

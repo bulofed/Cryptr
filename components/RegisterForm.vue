@@ -14,7 +14,7 @@ const formData = ref({
 const rememberMe = ref(false);
 const router = useRouter();
 
-const siteKey = useRuntimeConfig().public.recaptchaSiteKey;
+const siteKey = process.env.RECAPTCHA_PUBLIC;
 const onCaptchaVerified = (response) => {
     formData.value.recaptchaResponse = response;
     console.log('ReCaptcha vérifié:', response);

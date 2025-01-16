@@ -12,7 +12,7 @@ const rememberMe = ref(false);
 const emailOrUsername = ref('');
 const password = ref('');
 
-const siteKey = useRuntimeConfig().public.recaptchaSiteKey;
+const siteKey = process.env.RECAPTCHA_PUBLIC;
 const recaptchaResponse = ref(null);
 
 const onCaptchaVerified = (response) => {
