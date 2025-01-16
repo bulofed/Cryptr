@@ -12,6 +12,7 @@ const enigmeSchema = new mongoose.Schema({
     successRate: { type: Number },
     tries: { type: Number },
     averageResolutionTime: { type: Number },
+    completed: { type: Number },
   },
   unlocksClues: { type: [String] },
   imgPath: { type: String },

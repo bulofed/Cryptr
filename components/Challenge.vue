@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSession } from '~/composable/useSession';
 import { useUnlockedEnigmas } from '~/composable/useEnigma';
+import { fetchUser } from '~/composable/useUser'; // Importez fetchUser depuis useUser.js
 
 const { user, loadSession } = useSession();
 const { enigmes, loading, error, fetchUnlockedEnigmas } = useUnlockedEnigmas();
@@ -13,14 +14,24 @@ const goToEnigma = (id) => {
   router.push(`/enigme/${id}`);
 };
 
-onMounted(() => {
-  loadSession();
-  fetchUnlockedEnigmas(user);
+const userEnigmas = ref([]);
+const data = ref(null);
+
+onMounted(async () => {
+  await loadSession();
+  await fetchUnlockedEnigmas(user);
+  data.value = await fetchUser(user.value.username);
+  userEnigmas.value = data.value.unlockedEnigmas;
 });
 
 const sortedEnigmes = computed(() => {
   return [...enigmes.value].sort((a, b) => a.difficultyLevel - b.difficultyLevel)
 });
+
+const isEnigmaSolved = (enigmaTitle) => {
+  const enigma = userEnigmas.value.find(e => e.title === enigmaTitle);
+  return enigma && enigma.state === 'solved';
+};
 </script>
 
 <template>
@@ -63,11 +74,11 @@ const sortedEnigmes = computed(() => {
           <p class="text-gray-500">Taux de réussite</p>
         </div>
         <div class="flex flex-col justify-center">
-          <p class="text-5xl font-bold">{{ enigme.statistics.tries }}%</p>
+          <p class="text-5xl font-bold">{{ enigme.statistics.tries }}</p>
           <p class="text-gray-500">Tentatives</p>
         </div>
         <div class="flex flex-col justify-center">
-          <p class="text-5xl font-bold">{{ enigme.statistics.averageResolutionTime }}%</p>
+          <p class="text-5xl font-bold">{{ enigme.statistics.averageResolutionTime }}s</p>
           <p class="text-gray-500">Temps estimé</p>
         </div>
       </div>
@@ -85,6 +96,11 @@ const sortedEnigmes = computed(() => {
            enigme.difficultyLevel === 1 ? 'Facile' : 
            enigme.difficultyLevel === 2 ? 'Moyen' : 'Difficile' }}
       </span>
+
+      <!-- Checkmark pour les énigmes résolues -->
+      <div v-if="isEnigmaSolved(enigme.title)" class="absolute top-4 left-4">
+        <img src="/checkmark.png" alt="Checkmark" class="h-6 w-6" />
+      </div>
     </div>
   </div>
 </div>

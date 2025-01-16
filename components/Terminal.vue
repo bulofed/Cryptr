@@ -119,11 +119,32 @@ const commands = {
       const userEnigma = userData.unlockedEnigmas[enigmaIndex];
       if (userEnigma.state !== 'solved'){
         userEnigma.numberOfTry++;
+        enigma.statistics.tries++;
       }
 
+      await $fetch(`/api/enigmes/${enigma._id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          statistics: enigma.statistics
+        })
+      });
+
       if (arg === enigma.solution) {
-        await typeText(enigma.completionMessage);
+        typeText(enigma.completionMessage);
         if (userEnigma.state !== 'solved') { // Vérifie si l'énigme n'est pas déjà résolue
+          enigma.statistics.averageResolutionTime = Math.round((timer + enigma.statistics.averageResolutionTime) / 2);
+          console.log("Completed : ", enigma.statistics);
+          enigma.statistics.completed++;
+          enigma.statistics.successRate = Math.floor((enigma.statistics.completed / enigma.statistics.tries) * 100);
+          await $fetch(`/api/enigmes/${enigma._id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              statistics: enigma.statistics
+            })
+        });
+
           clearInterval(timerInterval);
 
           // userEnigma.state = 'solved';
