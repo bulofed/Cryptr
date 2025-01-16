@@ -97,7 +97,6 @@ onBeforeUnmount(() => {
   width: 500px; 
   transform: translate(-50%, -50%);
   z-index: 1000;
-  background-color: white; 
 }
 .overlay {
   position: fixed;
