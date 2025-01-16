@@ -15,22 +15,7 @@
         class="flex [&>:not(:last-child)]:border-e-2 [&>:not(:last-child)]:border-purple-500 hover:[&>*]:underline space-x-2 [&>:not(:last-child)]:pr-2"
       >
         <li>
-          <NuxtLink to="/">
-            Conditions d'utilisation
-          </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/">
-            Politique de confidentialité
-          </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/">
-            Gestion des cookies
-          </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/">
+          <NuxtLink to="/utilisateur/mention">
             Mentions légales
           </NuxtLink>
         </li>
