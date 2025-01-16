@@ -1,5 +1,9 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { useSession } from '~/composable/useSession';
+
+const { user, loadSession } = useSession();
+
+const unlockedClues = ref([]);
 
 const props = defineProps({
   count: {
@@ -24,7 +28,36 @@ const handleEscape = (event) => {
   }
 };
 
-onMounted(() => {
+const fetchUser = async (username) => {
+  try {
+    if (!username) {
+      return null;
+    }
+    const response = await $fetch(`/api/utilisateurs/${username}`);
+    if (response.success && response.data) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    return null;
+  }
+};
+
+const fetchClues = async (user) => {
+  try {
+    const userData = await fetchUser(user.value.username);
+    if (userData && userData.unlockedClues) {
+      unlockedClues.value = userData.unlockedClues;
+    }
+  } catch (error) {
+    console.error('Failed to fetch clues:', error);
+  }
+};
+
+onMounted(async () => {
+  loadSession();
+  await fetchClues(user);
   window.addEventListener('keydown', handleEscape);
 });
 
@@ -37,14 +70,16 @@ onBeforeUnmount(() => {
   <div class="flex justify-center">
     <div class="flex gap-4">
       <div 
-        v-for="i in count" 
-        :key="i" 
-        class="size-32 bg-neutral-700 rounded-lg cursor-pointer"
-        @click="selectItem(i)"
-        :class="{ 'expanded': selectedItem === i }"
-      ></div>
+        v-for="(clue, index) in unlockedClues" 
+        :key="index" 
+        class="w-32 bg-neutral-700 rounded-lg cursor-pointer"
+        @click="selectItem(index)"
+        :class="{ 'expanded': selectedItem === index }"
+      >
+        <img :src="clue.imgpath" alt="Clue Image" class="object-cover rounded-lg" />
+      </div>
     </div>
-    <div v-if="selectedItem" class="overlay" @click="deselectItem">
+    <div v-if="selectedItem !== null" class="overlay" @click="deselectItem">
       <div class="arrow" @click.stop="deselectItem">←</div>
     </div>
   </div>
@@ -59,8 +94,7 @@ onBeforeUnmount(() => {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 300px; 
-  height: 300px; 
+  width: 500px; 
   transform: translate(-50%, -50%);
   z-index: 1000;
   background-color: white; 
