@@ -18,7 +18,7 @@ const userEnigmas = ref([]);
 const data = ref(null);
 
 onMounted(async () => {
-  await loadSession();
+  loadSession();
   await fetchUnlockedEnigmas(user);
   data.value = await fetchUser(user.value.username);
   userEnigmas.value = data.value.unlockedEnigmas;
