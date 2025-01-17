@@ -54,36 +54,6 @@ const onSubmit = async () => {
           <h2 class="text-3xl font-bold text-gray-900">Connexion</h2>
         </div>
 
-        <!-- Boutons pour les différentes connexions -->
-        <div class="space-y-3">
-          <button
-            class="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-full shadow-sm bg-white hover:bg-gray-200"
-          >
-          <IconGithub />
-          <span class="text-gray-700">
-              <b>Continuer avec GitHub</b>
-            </span>
-          </button>
-          <button
-            class="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-full shadow-sm bg-white hover:bg-gray-200"
-          >
-            <IconGoogle class="w-5 h-5" />
-            <span class="text-gray-700">
-              <b>Continuer avec Google</b>
-            </span>
-          </button>
-        </div>
-
-        <!-- Séparateur -->
-        <div class="relative my-6">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-300"></div>
-          </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500">OU</span>
-          </div>
-        </div>
-
         <!-- Formulaire de connexion -->
         <form class="space-y-7" @submit.prevent="onSubmit">
           <!-- Champ Email ou Nom d'utilisateur -->
@@ -143,9 +113,7 @@ const onSubmit = async () => {
       <!-- Fin du formulaire -->
 
       <!-- Image -->
-      <div class="" >
-        <img src="~/public/Logo_Lock.jpg" alt="Authentification" class="max-h-* w-80 rounded-lg" />
-      </div>
+      <img src="~/public/Logo_Lock.jpg" alt="Authentification" class="w-full rounded-lg" />
     </div>
   </div>
 </template>
