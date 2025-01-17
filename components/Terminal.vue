@@ -72,13 +72,27 @@ const fetchClueByName = async (name) => {
   }
 };
 
-const postUnlockedClues = async (username, clues) => {
+const postUnlockedClues = async (username, clue) => {
   try {
+    // Fetch existing clues
+    const userResponse = await $fetch(`/api/utilisateurs/${username}`);
+    if (!userResponse.success || !userResponse.data) {
+      throw new Error('Failed to fetch user data');
+    }
+
+    const existingClues = userResponse.data.unlockedClues || [];
+    const updatedClues = [...existingClues];
+
+    if (!updatedClues.some(existingClue => existingClue._id === clue._id)) {
+      updatedClues.push(clue);
+    }
+
+    // Update user with new clues
     const response = await $fetch(`/api/utilisateurs/${username}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        unlockedClues: clues
+        unlockedClues: updatedClues
       })
     });
     return response;
