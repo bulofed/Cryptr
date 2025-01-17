@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ClueModel from "./Clue.js";
 
 const utilisateurSchema = new mongoose.Schema({
   username: { type: String, required: true },
@@ -15,11 +16,7 @@ const utilisateurSchema = new mongoose.Schema({
     },
   ],
   unlockedClues: [
-    {
-      title: { type: String, required: true },
-      Imgpath: { type: String, required: true },
-      description: { type: String, required: true },
-    },
+    ClueModel.schema,
   ],
   team: {
     teamName: { type: String },

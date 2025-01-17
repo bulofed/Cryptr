@@ -4,7 +4,6 @@ import { useSession } from '~/composable/useSession';
 import { useEnigma, useUnlockedEnigmas } from '~/composable/useEnigma';
 import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 
-
 const { user, loadSession } = useSession();
 const { fetchCurrentEnigma } = useEnigma();
 const { enigmes, fetchUnlockedEnigmas } = useUnlockedEnigmas();
@@ -61,13 +60,30 @@ const fetchEnigmaByName = async (name) => {
 
 const fetchClueByName = async (name) => {
   try {
-    const response = await $fetch(`/api/clues/${name}`);
+    const response = await $fetch(`/api/clues`);
     if (response.success && response.data) {
-      return response.data;
+      const clue = response.data.find(clue => clue.unlockedBy.toLowerCase() === name.toLowerCase());
+      return clue || null;
     }
     return null;
   } catch (error) {
     console.error('Failed to fetch clue by name:', error);
+    return null;
+  }
+};
+
+const postUnlockedClues = async (username, clues) => {
+  try {
+    const response = await $fetch(`/api/utilisateurs/${username}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        unlockedClues: clues
+      })
+    });
+    return response;
+  } catch (error) {
+    console.error('Failed to post unlocked clues:', error);
     return null;
   }
 };
@@ -131,7 +147,7 @@ const commands = {
       });
 
       if (arg === enigma.solution) {
-        typeText(enigma.completionMessage);
+        await typeText(enigma.completionMessage);
         if (userEnigma.state !== 'solved') { // Vérifie si l'énigme n'est pas déjà résolue
           enigma.statistics.averageResolutionTime = Math.round((timer + enigma.statistics.averageResolutionTime) / 2);
           console.log("Completed : ", enigma.statistics);
@@ -150,13 +166,13 @@ const commands = {
           // userEnigma.state = 'solved';
           userEnigma.completionTime = timer;
           userEnigma.dateCompletion = new Date();
-          fetchClueByName(enigma.unlocksClues).then(async (clue) => {
+          await fetchClueByName(enigma.title).then(async (clue) => {
             if (clue) {
               await typeText('Tu as débloqué une nouvelle piste : ' + clue.title);
-              unlockedClues.value.push(clue);
+              await postUnlockedClues(user.value.username, clue);
             }
           });
-          
+
           const calculatePoints = () => {
             let basePoints = enigma.pointsAwarded || 0;
 
@@ -201,12 +217,9 @@ const commands = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           unlockedEnigmas: userData.unlockedEnigmas,
-          pointsEarned: userData.pointsEarned,
-          unlockedClues: unlockedClues.value
+          pointsEarned: userData.pointsEarned
         })
       });
-
-      userData.unlockedClues.value = [];
     }
   },
 
