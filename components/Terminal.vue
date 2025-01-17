@@ -177,7 +177,7 @@ const commands = {
 
           clearInterval(timerInterval);
 
-          // userEnigma.state = 'solved';
+          userEnigma.state = 'solved';
           userEnigma.completionTime = timer;
           userEnigma.dateCompletion = new Date();
           await fetchClueByName(enigma.title).then(async (clue) => {
