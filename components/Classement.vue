@@ -134,7 +134,7 @@ onMounted(() => {
               <th class="py-3 px-4 text-left">Utilisateurs</th>
               <th class="py-3 px-4 text-left">Enigmes résolues</th>
               <th class="py-3 px-4 text-left">Total d'essaies</th>
-              <th class="py-3 px-4 text-left">Temps moyen</th>
+              <th class="py-3 px-4 text-left">Temps moyen en S</th>
               <th class="py-3 px-4 text-left">Points</th>
             </tr>
           </thead>
