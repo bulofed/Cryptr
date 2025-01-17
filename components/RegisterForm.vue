@@ -106,7 +106,7 @@ const onSubmit = async () => {
       <!-- Fin du formulaire -->
 
       <!-- Image -->
-      <img src="~/public/Logo_Lock.jpg" alt="Authentification" class="w-full rounded-lg" />
+      <img src="~/public/Logo_Lock.jpg" alt="Authentification" class="w-32 rounded-lg" />
     </div>
   </div>
 </template>
