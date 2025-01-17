@@ -112,7 +112,7 @@ const sortedEnigmes = computed(() => {
 
     <!-- Panneau gauche -->
     <transition name="slide-left">
-      <div v-if="isLeftPanelOpen" class="absolute top-0 left-0 h-full w-64 bg-gray-900 shadow-md z-20 flex flex-col p-4">
+      <div v-if="isLeftPanelOpen" class="absolute top-0 left-0 h-full w-64 bg-gray-900 shadow-md z-20 flex flex-col p-4 scroll-auto">
         <button
           @click="toggleLeftPanel"
           class="self-end text-gray-400 hover:text-gray-200"
@@ -128,9 +128,7 @@ const sortedEnigmes = computed(() => {
           </li>
         </ul>
 
-        <p class="text-white p-2 text-lg font-extrabold py-3">Site utile : </p>
-        <a href="https://www.dcode.fr/" class="text-white" target="_blank">dcode.fr </a>
-        <a href="https://stylesuxx.github.io/steganography/" class="text-white" target="_blank">steganography</a>
+
       
       </div>
     </transition>
@@ -151,6 +149,9 @@ const sortedEnigmes = computed(() => {
             {{ index + 1 }}- <button>{{ enigme.title }}</button>  
           </li>
         </ul>
+        <p class="text-white p-2 text-lg font-extrabold py-3">Site utile : </p>
+        <a href="https://www.dcode.fr/" class="text-white" target="_blank">dcode.fr </a><br>
+        <a href="https://stylesuxx.github.io/steganography/" class="text-white" target="_blank">steganography</a>
       </div>
     </div>
   </transition>
